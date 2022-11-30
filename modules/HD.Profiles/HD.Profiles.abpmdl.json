@@ -1,0 +1,111 @@
+{
+  "folders": {
+    "items": {
+      "src": {},
+      "test": {},
+      "host": {}
+    }
+  },
+  "packages": {
+    "HD.Profiles.Domain.Shared": {
+      "path": "src/HD.Profiles.Domain.Shared/HD.Profiles.Domain.Shared.abppkg.json",
+      "folder": "src"
+    },
+    "HD.Profiles.Domain": {
+      "path": "src/HD.Profiles.Domain/HD.Profiles.Domain.abppkg.json",
+      "folder": "src"
+    },
+    "HD.Profiles.Application.Contracts": {
+      "path": "src/HD.Profiles.Application.Contracts/HD.Profiles.Application.Contracts.abppkg.json",
+      "folder": "src"
+    },
+    "HD.Profiles.Application": {
+      "path": "src/HD.Profiles.Application/HD.Profiles.Application.abppkg.json",
+      "folder": "src"
+    },
+    "HD.Profiles.EntityFrameworkCore": {
+      "path": "src/HD.Profiles.EntityFrameworkCore/HD.Profiles.EntityFrameworkCore.abppkg.json",
+      "folder": "src"
+    },
+    "HD.Profiles.MongoDB": {
+      "path": "src/HD.Profiles.MongoDB/HD.Profiles.MongoDB.abppkg.json",
+      "folder": "src"
+    },
+    "HD.Profiles.HttpApi": {
+      "path": "src/HD.Profiles.HttpApi/HD.Profiles.HttpApi.abppkg.json",
+      "folder": "src"
+    },
+    "HD.Profiles.HttpApi.Client": {
+      "path": "src/HD.Profiles.HttpApi.Client/HD.Profiles.HttpApi.Client.abppkg.json",
+      "folder": "src"
+    },
+    "HD.Profiles.TestBase": {
+      "path": "test/HD.Profiles.TestBase/HD.Profiles.TestBase.abppkg.json",
+      "folder": "test"
+    },
+    "HD.Profiles.EntityFrameworkCore.Tests": {
+      "path": "test/HD.Profiles.EntityFrameworkCore.Tests/HD.Profiles.EntityFrameworkCore.Tests.abppkg.json",
+      "folder": "test"
+    },
+    "HD.Profiles.MongoDB.Tests": {
+      "path": "test/HD.Profiles.MongoDB.Tests/HD.Profiles.MongoDB.Tests.abppkg.json",
+      "folder": "test"
+    },
+    "HD.Profiles.Domain.Tests": {
+      "path": "test/HD.Profiles.Domain.Tests/HD.Profiles.Domain.Tests.abppkg.json",
+      "folder": "test"
+    },
+    "HD.Profiles.Application.Tests": {
+      "path": "test/HD.Profiles.Application.Tests/HD.Profiles.Application.Tests.abppkg.json",
+      "folder": "test"
+    },
+    "HD.Profiles.HttpApi.Host": {
+      "path": "host/HD.Profiles.HttpApi.Host/HD.Profiles.HttpApi.Host.abppkg.json",
+      "folder": "host"
+    },
+    "HD.Profiles.Web": {
+      "path": "src/HD.Profiles.Web/HD.Profiles.Web.abppkg.json",
+      "folder": "src"
+    },
+    "HD.Profiles.HttpApi.Client.ConsoleTestApp": {
+      "path": "test/HD.Profiles.HttpApi.Client.ConsoleTestApp/HD.Profiles.HttpApi.Client.ConsoleTestApp.abppkg.json",
+      "folder": "test"
+    },
+    "HD.Profiles.Web.Host": {
+      "path": "host/HD.Profiles.Web.Host/HD.Profiles.Web.Host.abppkg.json",
+      "folder": "host"
+    },
+    "HD.Profiles.AuthServer": {
+      "path": "host/HD.Profiles.AuthServer/HD.Profiles.AuthServer.abppkg.json",
+      "folder": "host"
+    },
+    "HD.Profiles.Host.Shared": {
+      "path": "host/HD.Profiles.Host.Shared/HD.Profiles.Host.Shared.abppkg.json",
+      "folder": "host"
+    },
+    "HD.Profiles.Web.Unified": {
+      "path": "host/HD.Profiles.Web.Unified/HD.Profiles.Web.Unified.abppkg.json",
+      "folder": "host"
+    },
+    "HD.Profiles.Blazor": {
+      "path": "src/HD.Profiles.Blazor/HD.Profiles.Blazor.abppkg.json",
+      "folder": "src"
+    },
+    "HD.Profiles.Blazor.Host": {
+      "path": "host/HD.Profiles.Blazor.Host/HD.Profiles.Blazor.Host.abppkg.json",
+      "folder": "host"
+    },
+    "HD.Profiles.Blazor.Server": {
+      "path": "src/HD.Profiles.Blazor.Server/HD.Profiles.Blazor.Server.abppkg.json",
+      "folder": "src"
+    },
+    "HD.Profiles.Blazor.WebAssembly": {
+      "path": "src/HD.Profiles.Blazor.WebAssembly/HD.Profiles.Blazor.WebAssembly.abppkg.json",
+      "folder": "src"
+    },
+    "HD.Profiles.Blazor.Server.Host": {
+      "path": "host/HD.Profiles.Blazor.Server.Host/HD.Profiles.Blazor.Server.Host.abppkg.json",
+      "folder": "host"
+    }
+  }
+}
