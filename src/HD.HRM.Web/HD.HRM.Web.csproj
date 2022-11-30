@@ -19,7 +19,8 @@
     <Content Remove="Logs\**" />
     <EmbeddedResource Remove="Logs\**" />
     <None Remove="Logs\**" />
-  <ProjectReference Include="..\..\modules\HD.Profiles\src\HD.Profiles.Web\HD.Profiles.Web.csproj" /></ItemGroup>
+  <ProjectReference Include="..\..\modules\HD.Profiles\src\HD.Profiles.Web\HD.Profiles.Web.csproj" />
+  <ProjectReference Include="..\..\modules\Volo.BasicTheme\src\Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic\Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.csproj" /></ItemGroup>
 
   <ItemGroup>
     <None Update="Pages\**\*.js">
@@ -33,10 +34,6 @@
   <ItemGroup>
     <PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
     <PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-	<PackageReference Include="Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic" Version="6.0.1" />
   </ItemGroup>
 
   <ItemGroup>

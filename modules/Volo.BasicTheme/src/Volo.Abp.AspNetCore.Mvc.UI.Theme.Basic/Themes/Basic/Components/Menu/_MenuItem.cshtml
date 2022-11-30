@@ -10,35 +10,32 @@
 {
     if (Model.Url != null)
     {
-        <a class="dropdown-item @cssClass @disabled" href="@url" target="@Model.Target" @Html.Raw(elementId)>
-            @if (Model.Icon != null)
-            {
-                if (Model.Icon.StartsWith("fa"))
-                {
-                    <i class="@Model.Icon"></i>
-                }
-            }
-            @Model.DisplayName
-        </a>
+        <li class="side-nav-item">
+            <a href="@url" target="@Model.Target" class="side-nav-link" @Html.Raw(elementId)>
+                <i class="@Model.Icon"></i>
+                <span> @Model.DisplayName</span>
+            </a>
+
+        </li>
     }
 }
 else
 {
-    <div class="dropdown-submenu">
-        <a role="button" class="btn dropdown-toggle" data-bs-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-            <span class="lp-icon">
-                <i class="@(Model.Icon ?? "")"></i>
-            </span>
-            <span class="lp-text">
-                @Model.DisplayName
-            </span>
+    <li class="side-nav-item">
+        <a data-bs-toggle="collapse" href="#@(Model.ElementId)" aria-expanded="false" aria-controls="@(Model.ElementId)" class="side-nav-link">
+            <i class="@Model.Icon"></i>
+            <span> @Model.DisplayName </span>
+            <span class="menu-arrow"></span>
         </a>
-        <div class="dropdown-menu border-0 shadow-sm">
-            @foreach (var childMenuItem in Model.Items)
-            {
-                @await Html.PartialAsync("~/Themes/Basic/Components/Menu/_MenuItem.cshtml", childMenuItem)
-            }
+
+        <div class="collapse" id="@(Model.ElementId)">
+            <ul class="side-nav-second-level">
+                @foreach (var childMenuItem in Model.Items)
+                {
+                    @await Html.PartialAsync("~/Themes/Basic/Components/Menu/_MenuItem.cshtml", childMenuItem)
+                }
+            </ul>
         </div>
-    </div>
+    </li>
+
 }

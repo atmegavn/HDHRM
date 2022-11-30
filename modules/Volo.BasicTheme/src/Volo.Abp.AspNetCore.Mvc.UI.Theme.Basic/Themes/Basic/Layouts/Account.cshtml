@@ -46,52 +46,59 @@
 
     @await Component.InvokeAsync(typeof(WidgetStylesViewComponent))
 
-    @await Component.InvokeLayoutHookAsync(LayoutHooks.Head.Last, StandardLayouts.Account)
+    <link rel="shortcut icon" href="~/images/logo/hdvietnam/hd-fav.ico">
+    <!-- App css -->
+    <link href="~/themes/hyper/saas/assets/css/app-saas.min.css" rel="stylesheet" type="text/css" id="app-style" />
+    <!-- Icons css -->
+    <link href="~/themes/hyper/saas/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 </head>
-<body class="abp-account-layout @rtl">
-    @await Component.InvokeLayoutHookAsync(LayoutHooks.Body.First, StandardLayouts.Account)
 
-    @(await Component.InvokeAsync<MainNavbarViewComponent>())
-
-    <div class="@containerClass">
-        <abp-row>
-            <abp-column class="col mx-auto" style="max-width: 440px">
-                @if (MultiTenancyOptions.Value.IsEnabled &&
-                  (TenantResolveResultAccessor.Result?.AppliedResolvers?.Contains(CookieTenantResolveContributor.ContributorName) == true ||
+<body class="authentication-bg @rtl">
+    <div class="account-pages pt-2 pt-sm-5 pb-4 pb-sm-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xxl-4 col-lg-5">
+                    @if (MultiTenancyOptions.Value.IsEnabled &&
+                   (TenantResolveResultAccessor.Result?.AppliedResolvers?.Contains(CookieTenantResolveContributor.ContributorName) == true ||
                    TenantResolveResultAccessor.Result?.AppliedResolvers?.Contains(QueryStringTenantResolveContributor.ContributorName) == true))
-                {
-                    <div class="card shadow-sm rounded mb-3">
-                        <div class="card-body px-5">
-                            <div class="row">
-                                <div class="col">
-                                    <span style="font-size: .8em;" class="text-uppercase text-muted">@MultiTenancyStringLocalizer["Tenant"]</span><br />
-                                    <h6 class="m-0 d-inline-block">
-                                        @if (CurrentTenant.Id == null)
-                                        {
-                                            <span>
-                                                @MultiTenancyStringLocalizer["NotSelected"]
-                                            </span>
-                                        }
-                                        else
-                                        {
-                                            <strong>@(CurrentTenant.Name ?? CurrentTenant.Id.Value.ToString())</strong>
-                                        }
-                                    </h6>
-                                </div>
-                                <div class="col-auto">
-                                    <a id="AbpTenantSwitchLink" href="javascript:;" class="btn btn-sm mt-3 btn-outline-primary">@MultiTenancyStringLocalizer["Switch"]</a>
+                    {
+                        <div class="card shadow-sm rounded mb-3">
+                            <div class="card-body px-5">
+                                <div class="row">
+                                    <div class="col">
+                                        <span style="font-size: .8em;" class="text-uppercase text-muted">@MultiTenancyStringLocalizer["Tenant"]</span><br />
+                                        <h6 class="m-0 d-inline-block">
+                                            @if (CurrentTenant.Id == null)
+                                            {
+                                                <span>
+                                                    @MultiTenancyStringLocalizer["NotSelected"]
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <strong>@(CurrentTenant.Name ?? CurrentTenant.Id.Value.ToString())</strong>
+                                            }
+                                        </h6>
+                                    </div>
+                                    <div class="col-auto">
+                                        <a id="AbpTenantSwitchLink" href="javascript:;" class="btn btn-sm mt-3 btn-outline-primary">@MultiTenancyStringLocalizer["Switch"]</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                }
-                @(await Component.InvokeAsync<PageAlertsViewComponent>())
-                @await Component.InvokeLayoutHookAsync(LayoutHooks.PageContent.First, StandardLayouts.Account)
-                @RenderBody()
-                @await Component.InvokeLayoutHookAsync(LayoutHooks.PageContent.Last, StandardLayouts.Account)
-            </abp-column>
-        </abp-row>
+                    }
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-xxl-4 col-lg-5">
+                    @RenderBody()
+                </div> <!-- end col -->
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container -->
     </div>
+    <!-- end page -->
 
     <abp-script-bundle name="@BasicThemeBundles.Scripts.Global" />
 
@@ -102,6 +109,5 @@
 
     @await Component.InvokeAsync(typeof(WidgetScriptsViewComponent))
 
-    @await Component.InvokeLayoutHookAsync(LayoutHooks.Body.Last, StandardLayouts.Account)
 </body>
 </html>
