@@ -16,9 +16,32 @@
 
   <ItemGroup>
     <Compile Remove="Logs\**" />
+    <Compile Remove="wwwroot\libs\**" />
     <Content Remove="Logs\**" />
+    <Content Remove="wwwroot\libs\**" />
     <EmbeddedResource Remove="Logs\**" />
+    <EmbeddedResource Remove="wwwroot\libs\**" />
     <None Remove="Logs\**" />
+    <None Remove="wwwroot\libs\**" />
+    <Content Remove="wwwroot\assets\css\app_saas.css" />
+    <Content Remove="wwwroot\assets\css\app_saas.min.css" />
+    <Content Remove="wwwroot\assets\css\app_saas.min.css.map" />
+    <Content Remove="wwwroot\assets\css\app_saas_rtl.css" />
+    <Content Remove="wwwroot\assets\css\app_saas_rtl.min.css" />
+    <Content Remove="wwwroot\assets\css\app_saas_rtl.min.css.map" />
+    <Content Remove="wwwroot\assets\css\icons.css" />
+    <Content Remove="wwwroot\assets\css\icons.min.css" />
+    <Content Remove="wwwroot\assets\css\icons.min.css.map" />
+    <Content Remove="wwwroot\global-styles.css" />
+    <EmbeddedResource Include="wwwroot\assets\css\app_saas.css" />
+    <EmbeddedResource Include="wwwroot\assets\css\app_saas.min.css" />
+    <EmbeddedResource Include="wwwroot\assets\css\app_saas.min.css.map" />
+    <EmbeddedResource Include="wwwroot\assets\css\app_saas_rtl.css" />
+    <EmbeddedResource Include="wwwroot\assets\css\app_saas_rtl.min.css" />
+    <EmbeddedResource Include="wwwroot\assets\css\app_saas_rtl.min.css.map" />
+    <EmbeddedResource Include="wwwroot\assets\css\icons.css" />
+    <EmbeddedResource Include="wwwroot\assets\css\icons.min.css" />
+    <EmbeddedResource Include="wwwroot\assets\css\icons.min.css.map" />
   <ProjectReference Include="..\..\modules\HD.Profiles\src\HD.Profiles.Web\HD.Profiles.Web.csproj" />
   <ProjectReference Include="..\..\modules\Volo.BasicTheme\src\Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic\Volo.Abp.AspNetCore.Mvc.UI.Theme.Basic.csproj" /></ItemGroup>
 
@@ -47,6 +70,28 @@
     <PackageReference Include="Volo.Abp.Account.Web.OpenIddict" Version="6.0.1" />
     <PackageReference Include="Volo.Abp.TenantManagement.Web" Version="6.0.1" />
     <PackageReference Include="Volo.Abp.SettingManagement.Web" Version="6.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\assets\css\theme-rtl.css.map" />
+    <None Include="wwwroot\assets\css\theme-rtl.min.css.map" />
+    <None Include="wwwroot\assets\css\theme.css.map" />
+    <None Include="wwwroot\assets\css\theme.min.css.map" />
+    <None Include="wwwroot\assets\css\user-rtl.css.map" />
+    <None Include="wwwroot\assets\css\user-rtl.min.css.map" />
+    <None Include="wwwroot\assets\css\user.css.map" />
+    <None Include="wwwroot\assets\css\user.min.css.map" />
+    <None Include="wwwroot\assets\images\bg-pattern-light.svg" />
+    <None Include="wwwroot\assets\images\svg\email-campaign.svg" />
+    <None Include="wwwroot\assets\images\svg\features-1.svg" />
+    <None Include="wwwroot\assets\images\svg\features-2.svg" />
+    <None Include="wwwroot\assets\images\svg\file-searching.svg" />
+    <None Include="wwwroot\assets\images\svg\help-icon.svg" />
+    <None Include="wwwroot\assets\images\svg\mail_sent.svg" />
+    <None Include="wwwroot\assets\images\svg\maintenance.svg" />
+    <None Include="wwwroot\assets\images\svg\report.svg" />
+    <None Include="wwwroot\assets\images\svg\startman.svg" />
+    <None Include="wwwroot\assets\images\svg\startup.svg" />
   </ItemGroup>
 
 </Project>

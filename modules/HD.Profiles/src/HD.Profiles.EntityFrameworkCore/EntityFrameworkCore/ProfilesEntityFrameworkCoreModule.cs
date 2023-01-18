@@ -14,9 +14,15 @@ public class ProfilesEntityFrameworkCoreModule : AbpModule
     {
         context.Services.AddAbpDbContext<ProfilesDbContext>(options =>
         {
-                /* Add custom repositories here. Example:
-                 * options.AddRepository<Question, EfCoreQuestionRepository>();
-                 */
+            /* Add custom repositories here. Example:
+             * options.AddRepository<Question, EfCoreQuestionRepository>();
+             */
+            context.Services.AddAbpDbContext<ProfilesDbContext>(options =>
+            {
+                /* Remove "includeAllEntities: true" to create
+                 * default repositories only for aggregate roots */
+                options.AddDefaultRepositories(includeAllEntities: true);
+            });
         });
     }
 }

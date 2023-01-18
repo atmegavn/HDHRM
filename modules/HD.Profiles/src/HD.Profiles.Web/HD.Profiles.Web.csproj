@@ -34,7 +34,30 @@
     <Content Remove="Pages\**\*.js" />
     <Content Remove="Components\**\*.js" />
     <Content Remove="Components\**\*.css" />
-    <Content Remove="wwwroot\**\*.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Pages\Employees\Detail.cshtml.cs" />
+    <Compile Remove="Pages\Employees\Index.cshtml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\Employees\Detail.cshtml" />
+    <Content Remove="Pages\Employees\Index.cshtml" />
+    <Content Remove="wwwroot\assets\css\app_saas.css" />
+    <Content Remove="wwwroot\assets\css\app_saas.min.css" />
+    <Content Remove="wwwroot\assets\css\app_saas.min.css.map" />
+    <Content Remove="wwwroot\assets\css\app_saas_rtl.css" />
+    <Content Remove="wwwroot\assets\css\app_saas_rtl.min.css" />
+    <Content Remove="wwwroot\assets\css\app_saas_rtl.min.css.map" />
+    <Content Remove="wwwroot\assets\css\icons.css" />
+    <Content Remove="wwwroot\assets\css\icons.min.css" />
+    <Content Remove="wwwroot\assets\css\icons.min.css.map" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\JobTitles\Create.cshtml" />
+    <None Include="Pages\JobTitles\Index.cshtml" />
   </ItemGroup>
 
 </Project>

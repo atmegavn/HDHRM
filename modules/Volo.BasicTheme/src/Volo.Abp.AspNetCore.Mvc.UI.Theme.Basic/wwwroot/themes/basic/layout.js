@@ -14,3 +14,25 @@ $(function () {
         return false;
     });
 });
+
+function openStandardModal(element) {
+    var url = $(element).attr("url");
+    $("#standard-modal-content").load(url, function () {
+        $("#standard-modal-trigger").click();
+    });
+}
+
+function openlangerModal(element) {
+    var url = $(element).attr("url");
+    $("#langer-modal-content").load(url, function () {
+        $("#langer-modal-trigger").click();
+    });
+}
+
+
+function openDangerModal(element) {
+    var url = $(element).attr("url");
+    $("#danger-alert-modal-content").load(url, function () {
+        $("#danger-alert-modal-trigger").click();
+    });
+}

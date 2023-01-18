@@ -1,0 +1,141 @@
+﻿@page
+@using HD.Profiles.Localization
+@using Microsoft.Extensions.Localization
+@using HD.Profiles.Web.Pages.Employees
+@using Volo.Abp.Application.Dtos;
+
+@inject IStringLocalizer<ProfilesResource> Localizer
+@model IndexModel
+@{
+    var currentUrl = $"{Request.PathBase}{Request.Path}{Request.QueryString}";
+    var totalCount = Model.Result.TotalCount;
+
+    var currentPaging = Model.Params;
+    long startPage = currentPaging.SkipCount + 1;
+    long endPage = currentPaging.SkipCount + currentPaging.MaxResultCount;
+    if (endPage > totalCount) endPage = totalCount;
+
+    PagedAndSortedResultRequestDto nextPaging = new PagedAndSortedResultRequestDto();
+    PagedAndSortedResultRequestDto prevPaging = new PagedAndSortedResultRequestDto();
+
+    nextPaging.SkipCount = currentPaging.SkipCount + currentPaging.MaxResultCount;
+    nextPaging.MaxResultCount = currentPaging.MaxResultCount;
+
+    prevPaging.SkipCount = currentPaging.SkipCount - currentPaging.MaxResultCount;
+    prevPaging.MaxResultCount = currentPaging.MaxResultCount;
+
+    var isDisablePrev = currentPaging.SkipCount == 0 ? "disabled" : "";
+    var isDisableNext = endPage >= totalCount ? "disabled" : "";
+
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-right">
+                <div class="app-search">
+                    <form>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search..." />
+                            <span class="mdi mdi-magnify search-icon"></span>
+                            <button class="input-group-text btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Trạng thái
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <a class="dropdown-item" href="#">Chính thức</a>
+                                <a class="dropdown-item" href="#">Thử việc</a>
+                                <a class="dropdown-item" href="#">Nghỉ không lương</a>
+                            </div>
+                            <button class="input-group-text btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Đơn vị
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <a class="dropdown-item" href="#">Ban khoa giáo</a>
+                                <a class="dropdown-item" href="#">Ban thời sự</a>
+                                <a class="dropdown-item" href="#">Ban quốc tế</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <h4 class="page-title">@Localizer["Employees"] </h4>
+        </div>
+    </div> <!-- end col -->
+</div>
+
+<div class="row">
+    <div class="col-4">
+        <a class="btn btn-sm btn-primary" href="@Url.Page("Create", new { backUrl = currentUrl })"><i class="mdi mdi-account-plus"></i> @Localizer["Create"]</a>
+    </div>
+
+    <div class="col-8 d-flex justify-content-end align-content-center">
+        <div class="btn-group ms-1">
+            <button class="btn btn-light dropdown-toggle" type="button" id="employee_sorter" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="mdi mdi-sort"></i>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="employee_sorter">
+                <a class="dropdown-item" href="#">Sắp xếp theo Tên</a>
+                <a class="dropdown-item" href="#">Sắp xếp theo Chức danh</a>
+                <a class="dropdown-item" href="#">Sắp xếp theo Đơn vị</a>
+            </div>
+        </div>
+        <div class="btn-group ms-1">
+            <button class="btn btn-light dropdown-toggle" type="button" id="employee_exporter" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="mdi mdi-file-export"></i>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="employee_exporter">
+                <a class="dropdown-item" href="#">Nhân viên sinh nhật trong tháng</a>
+                <a class="dropdown-item" href="#">Nhân viên sắp hết hạn hợp đồng</a>
+                <a class="dropdown-item" href="#">Nhân viên có con nhỏ</a>
+            </div>
+        </div>
+        <div class="btn-group ms-1">
+            <a class="btn btn-light @isDisablePrev" href="@Url.Page("Index", prevPaging)" tabindex="-1" aria-disabled="true"><i class="mdi mdi-arrow-left-bold"></i></a>
+            <a class="btn btn-light">
+                @{
+                    var pageInfor = Model.Result.TotalCount > 0 ? $"{startPage} - {endPage} of {totalCount} records" : Localizer["We found nothing"];
+                }
+                @pageInfor
+            </a>
+            <a class="btn btn-light @isDisableNext" href="@Url.Page("Index", nextPaging)"><i class="mdi mdi-arrow-right-bold"></i></a>
+        </div>
+        <div class="btn-group ms-1 ">
+            <button type="button" class="btn btn-light"><i class="mdi mdi-view-dashboard"></i></button>
+            <button type="button" class="btn btn-primary"><i class="mdi mdi-view-grid"></i></button>
+            <button type="button" class="btn btn-light"><i class="mdi mdi-view-list"></i></button>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <hr />
+    </div>
+</div>
+
+<div class="row">
+
+    @foreach (var employee in Model.Result.Items)
+    {
+        <div class="col-md-6 col-xxl-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex">
+                        <div class="flex-shrink-0">
+                            <img class="rounded-circle avatar-sm" src="~/assets/images/users/avatar-1.jpg" alt="Avtar image">
+                        </div>
+                        <div class="flex-grow-1 ms-2">
+                            <a href="@Url.Page("Detail",new {id=employee.Id })" class="text-secondary"><h5 class="my-1">@employee.Name</h5></a>
+                            <p class="text-muted mb-0">@employee.JobTitle?.Name</p>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center card-body py-2 border-top border-light">
+                    <h5 class="my-0 font-13 fw-semibold text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="Ngày vào công ty"><i class="mdi mdi-calendar me-1" ></i> @employee.DateOfOnboard.ToString("dd/MM/yyyy")</h5>
+                    <a href="javascript:void(0);" class="text-muted" data-bs-toggle="modal" data-bs-target="#client-chat"><i class="mdi mdi-phone font-18" data-bs-toggle="tooltip" data-bs-placement="top" title="Call"></i></a>
+                </div>
+            </div>
+        </div>
+    }
+
+</div> <!-- End row -->

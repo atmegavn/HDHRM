@@ -1,0 +1,139 @@
+﻿@page
+@using HD.Profiles.Localization
+@using Microsoft.Extensions.Localization
+@using Volo.Abp.Application.Dtos;
+@using HD.Profiles.Organizations
+
+@inject IStringLocalizer<ProfilesResource> Localizer
+@model HD.ProfileManager.Web.Pages.Organizations.IndexModel
+@{
+    var currentUrl = $"{Request.PathBase}{Request.Path}{Request.QueryString}";
+    var totalCount = Model.Result.TotalCount;
+
+    var currentPaging = Model.Params;
+    long startPage = currentPaging.SkipCount + 1;
+    long endPage = currentPaging.SkipCount + currentPaging.MaxResultCount;
+    if (endPage > totalCount) endPage = totalCount;
+
+    PagedAndSortedResultRequestDto nextPaging = new PagedAndSortedResultRequestDto();
+    PagedAndSortedResultRequestDto prevPaging = new PagedAndSortedResultRequestDto();
+
+    nextPaging.SkipCount = currentPaging.SkipCount + currentPaging.MaxResultCount;
+    nextPaging.MaxResultCount = currentPaging.MaxResultCount;
+
+    prevPaging.SkipCount = currentPaging.SkipCount - currentPaging.MaxResultCount;
+    prevPaging.MaxResultCount = currentPaging.MaxResultCount;
+
+    var isDisablePrev = currentPaging.SkipCount == 0 ? "disabled" : "";
+    var isDisableNext = endPage >= totalCount ? "disabled" : "";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-right">
+                <div class="app-search">
+                    <form>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search..." />
+                            <span class="mdi mdi-magnify search-icon"></span>
+                            <button class="input-group-text btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Tất cả
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                @{
+                                    foreach (var level in Enum.GetValues(typeof(Level)))
+                                    {
+                                        <a class="dropdown-item" href="#">@level.ToString()</a>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <h4 class="page-title">@Localizer["Organizations"] </h4>
+        </div>
+    </div> <!-- end col -->
+</div>
+
+
+<div class="row">
+    <div class="col-4">
+        <button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownOrgLevel" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="mdi mdi-domain-plus"></i> @Localizer["Create"]
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownOrgLevel">
+            @{
+                foreach (var level in Enum.GetValues(typeof(Level)))
+                {
+                    <a class="dropdown-item" href="@Url.Page("Create", new { backUrl = currentUrl, level })">@level.ToString()</a>
+                }
+            }
+        </div>
+    </div>
+    <div class="col-8 d-flex justify-content-end align-content-center">
+        <div class="btn-group ms-1">
+            <button class="btn btn-light dropdown-toggle" type="button" id="employee_sorter" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="mdi mdi-sort"></i>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="employee_sorter">
+                <a class="dropdown-item" href="#">Sắp xếp theo Tên</a>
+                <a class="dropdown-item" href="#">Sắp xếp theo Chức danh</a>
+                <a class="dropdown-item" href="#">Sắp xếp theo Đơn vị</a>
+            </div>
+        </div>
+        <div class="btn-group ms-1">
+            <a class="btn btn-light @isDisablePrev" href="@Url.Page("Index", prevPaging)" tabindex="-1" aria-disabled="true"><i class="mdi mdi-arrow-left-bold"></i></a>
+            <a class="btn btn-light">
+                @{
+                    var pageInfor = Model.Result.TotalCount > 0 ? $"{startPage} - {endPage} of {totalCount} records" : Localizer["We found nothing"];
+                }
+                @pageInfor
+            </a>
+            <a class="btn btn-light @isDisableNext" href="@Url.Page("Index", nextPaging)"><i class="mdi mdi-arrow-right-bold"></i></a>
+        </div>
+        <div class="btn-group ms-1 ">
+            <button type="button" class="btn btn-light"><i class="mdi mdi-view-grid"></i></button>
+            <button type="button" class="btn btn-primary"><i class="mdi mdi-view-list"></i></button>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div class="col-12">
+        <hr />
+    </div>
+</div>
+
+
+<div class="row">
+
+    <div class="col-12">
+        <table class="table table-sm table-centered mb-0">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Code</th>
+                    <th>Level</th>
+                    <th style="width: 100px"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var org in Model.Result.Items)
+                {
+                    <tr>
+                        <td>
+                            <a href="@Url.Page("Detail", new {id=org.Id, backUrl=currentUrl })">@org.Name</a>
+                        </td>
+                        <td>@org.Code</td>
+                        <td>@org.Level</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div> <!-- End row -->

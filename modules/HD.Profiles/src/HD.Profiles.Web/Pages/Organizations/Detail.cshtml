@@ -1,0 +1,178 @@
+﻿@page
+@using HD.Profiles.Localization
+@using Microsoft.Extensions.Localization
+@using HD.Profiles.Organizations
+
+@inject IStringLocalizer<ProfilesResource> Localizer
+
+@model HD.ProfileManager.Web.Pages.Organizations.DetailModel
+
+@{
+    var currentUrl = $"{Request.PathBase}{Request.Path}{Request.QueryString}";
+    var backUrl = Model.BackUrl;
+    ViewBag.Title = @Localizer["Create Organization"].ToString();
+    var parentId = Model.Form.Id;
+    var keys = Model.Positions.Select(op => op.Job).ToList();
+    var positions = Model.Positions.GroupBy(p => p.JobId).ToDictionary(gr => gr.Key, gr => gr.ToList());
+}
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                    <li class="breadcrumb-item"><a href="javascript: void(0);">Parent Organization</a></li>
+                    <li class="breadcrumb-item active">@Model.Form.Name.ToString()</li>
+                </ol>
+            </div>
+            <h4 class="page-title">@Model.Form.Level @Model.Form.Name.ToString()</h4>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <a class="btn btn-sm btn-primary" href="@Url.Page("AddPosition", new {id=Model.Form.Id, backUrl = currentUrl })"><i class="mdi mdi-account-multiple-plus"></i> @Localizer["Position"]</a>
+        <button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownOrgLevel" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="mdi mdi-domain-plus"></i> @Localizer["Organization"]
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownOrgLevel">
+            @{
+                foreach (var level in Enum.GetValues(typeof(Level)))
+                {
+                    if ((int)level > (int)Model.Form.Level)
+                    {
+                        <a class="dropdown-item" href="@Url.Page("Create", new { backUrl = currentUrl, parentId, level })">@level.ToString()</a>
+                    }
+                }
+            }
+        </div>
+        <a class="btn btn-sm btn-secondary" href="@Url.Page("Edit", new { backUrl = currentUrl, id=Model.Form.Id })"><i class="mdi mdi-store-edit"></i> @Localizer["Edit"]</a>
+
+        <a href="@Html.Raw(Model.BackUrl)" class="btn btn-sm btn-secondary">
+            <span class="mdi mdi-keyboard-return"></span> @Localizer["Back"]
+        </a>
+        <a class="btn btn-sm btn-danger float-end" href="javascript:void(0);" onclick="openDangerModal(this)" url="@Url.Page("Remove", new { backUrl, id=Model.Form.Id })"><i class="mdi mdi-delete"></i> @Localizer["Delete"]</a>
+    </div>
+</div>
+<hr />
+@{
+    if (ViewData["Exception"] != null)
+    {
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-danger" role="alert">
+                    <i class="ri-close-circle-line me-2"></i> @ViewData["Exception"]
+                </div>
+            </div>
+        </div>
+    }
+}
+<div class="row">
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="header-title mt-0 mb-3">@Localizer["Information"]</h4>
+                @{
+                    if (!string.IsNullOrEmpty(Model.Form.Description))
+                    {
+                        <p class="text-muted font-13">
+                            @Model.Form.Description
+                        </p>
+                        <hr>
+                    }
+                }
+                <div class="text-start">
+                    <p class="text-muted"><strong>Code :</strong> <span class="ms-2">@Model.Form.Code</span></p>
+
+                    <p class="text-muted"><strong>Mobile :</strong><span class="ms-2">@Model.Form.Phone</span></p>
+
+                    <p class="text-muted"><strong>Email :</strong> <span class="ms-2">@Model.Form.Email</span></p>
+
+                    <p class="text-muted"><strong>Location :</strong> <span class="ms-2">@Model.Form.Location</span></p>
+                </div>
+
+                @{
+                    if (Model.Form.Positions.Count > 0)
+                    {
+                        <hr />
+                        <h4 class="header-title mt-0 mb-3">@Localizer["Managements"]</h4>
+
+                        foreach (var pos in Model.Form.Positions)
+                        {
+                            if (pos.EmployeeId.HasValue)
+                            {
+                                var emp = Model.EmployeeLoockup.Items.FirstOrDefault(e => e.Id == pos.EmployeeId);
+                                <p class="text-muted"><strong>@pos.Name: </strong> <a target="_blank" href="/Employees/Detail?id=@pos.EmployeeId" class="ms-2 float-end">@emp?.Name </a></p>
+                            }
+                            else
+                            {
+                                <p class="text-muted"><strong>@pos.Name: </strong> <a href="javascript:void(0);" onclick="openlangerModal(this)" url="@Url.Page("Appoint", new { backUrl=currentUrl, id=pos.Id })" class="float-end"><i class="mdi mdi-open-in-new"></i></a> <i class="me-2 float-end">@Localizer["not assigned"] </i></p>
+                            }
+                        }
+                    }
+
+                    if (Model.Organizations.Count > 0)
+                    {
+                        <hr />
+                        <h4 class="header-title mt-0 mb-3">@Localizer["Sub Organizations"]</h4>
+                        foreach (var orgDto in Model.Organizations.OrderBy(o => o.Level))
+                        {
+                            <ul class="list-inline mb-2">
+                                <li class="list-inline-item font-16 fw-semibold"><a href="@Url.Page("Detail", new { id = orgDto.Id, backUrl = currentUrl })" class="text-primary"><i class="mdi mdi-office-building"></i> @orgDto.Name</a></li>
+                            </ul>
+                        }
+                    }
+                }
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-8">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="header-title">
+                    Định biên
+                </h4>
+                <div class="table-responsive">
+                    <table id="basic-datatable" class="table dt-responsive nowrap w-100">
+                        <thead>
+                            <tr>
+                                <th>Vị trí</th>
+                                <th>Cấp bậc</th>
+                                <th>Số lượng</th>
+                                <th>Đã bổ nhiệm</th>
+                                <th>Còn lại</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var pid in positions.Keys)
+                            {
+                                var assigned = positions[pid].Where(op => op.EmployeeId.HasValue).Count();
+                                <tr>
+                                    <td><a href="@Url.Page("PositionList", new {id=pid, orgId=parentId, backUrl=currentUrl })">@keys.FirstOrDefault(k => k.Id == pid)?.Name</a></td>
+                                    <td>@keys.FirstOrDefault(k => k.Id == pid)?.Level</td>
+                                    <td>@positions[pid].Count</td>
+                                    <td>@assigned / @positions[pid].Count </td>
+                                    <td>@assigned / @positions[pid].Count </td>
+                                </tr>
+                            }
+
+                            @{ 
+                                if(positions.Keys.Count == 0)
+                                {
+                                    <tr><td colspan="5" class="justify-content-center align-content-center"><i class="text-info">Chưa có vị trí nào</i></td></tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+
+                </div> <!-- end table responsive-->
+            </div> <!-- end col-->
+        </div>
+    </div>
+</div>

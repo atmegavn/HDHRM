@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="..\..\common.props" />
 
@@ -10,8 +10,13 @@
   <ItemGroup>
     <PackageReference Include="Volo.Abp.AutoMapper" Version="6.0.1" />
     <PackageReference Include="Volo.Abp.Ddd.Application" Version="6.0.1" />
+    <PackageReference Include="Volo.Abp.EntityFrameworkCore.SqlServer" Version="6.0.1" />
     <ProjectReference Include="..\HD.Profiles.Application.Contracts\HD.Profiles.Application.Contracts.csproj" />
     <ProjectReference Include="..\HD.Profiles.Domain\HD.Profiles.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="JobPositions\" />
   </ItemGroup>
 
 </Project>

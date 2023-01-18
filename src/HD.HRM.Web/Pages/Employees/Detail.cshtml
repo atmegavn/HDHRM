@@ -1,0 +1,606 @@
+﻿@page
+
+@using HD.Profiles.Localization
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<ProfilesResource> Localizer
+
+@model HD.Profiles.Web.Pages.Employees.DetailModel
+@{
+    var currentUrl = $"{Request.PathBase}{Request.Path}{Request.QueryString}";
+    var backUrl = Model.BackUrl;
+}
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <h4 class="page-title">@Model.Employee.Name</h4>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <a class="btn btn-sm btn-primary" href="@Url.Page("Edit", new { backUrl = currentUrl, id=Model.Employee.Id })"><i class="mdi mdi-account-edit"></i> @Localizer["Edit"]</a>
+
+        <a href="@Html.Raw(Model.BackUrl)" class="btn btn-sm btn-secondary">
+            <span class="mdi mdi-keyboard-return"></span> @Localizer["Back"]
+        </a>
+    </div>
+</div>
+<hr />
+
+<div class="row">
+    <div class="col-xxl-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <img src="/assets/images/users/avatar-1.jpg" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image">
+
+                <h4 class="mb-0 mt-2">@Model.Employee.Name</h4>
+                <p class="text-muted font-14">@Model.Employee.JobTitle?.Name</p>
+
+                <div class="text-start mt-3">
+                    <p class="text-muted mb-2 font-13">
+                        <strong>Mã:</strong> <span class="ms-2">
+                            @Model.Employee.Code
+                        </span>
+                    </p>
+                    <p class="text-muted mb-2 font-13">
+                        <strong>Vị trí :</strong> <span class="ms-2">
+                            <a href="#">Giám đốc</a> tại <a href="#">Công ty HD Việt Nam</a>
+                        </span>
+                    </p>
+                    <p class="text-muted mb-2 font-13">
+                        <strong>Trạng thái :</strong> <span class="ms-2">
+                            Chính thức
+                        </span>
+                    </p>
+                    <p class="text-muted mb-2 font-13">
+                        <strong>Ngày vào công ty :</strong><span class="ms-2">
+                            @Model.Employee.DateOfOnboard.ToString("dd/MM/yyyy")
+                        </span>
+                    </p>
+                </div>
+                <hr />
+
+                <div class="text-start mt-3">
+                    <h4 class="font-13 text-uppercase">About Me :</h4>
+                    <p class="text-muted font-13 mb-3">
+                        Hi I'm Johnathn Deo,has been the industry's standard dummy text ever since the
+                        1500s, when an unknown printer took a galley of type.
+                    </p>
+                    <p class="text-muted mb-2 font-13">
+                        <strong>Họ Tên :</strong> <span class="ms-2">
+                            @Model.Employee.Name
+                        </span>
+                    </p>
+                    <p class="text-muted mb-2 font-13">
+                        <strong>Giới tính :</strong> <span class="ms-2">
+                            Profile.Gender
+                        </span>
+                    </p>
+                    <p class="text-muted mb-2 font-13">
+                        <strong>Số điện thoại :</strong> <span class="ms-2">
+                            @Model.Employee.Mobile
+                        </span>
+                    </p>
+                    <p class="text-muted mb-2 font-13">
+                        <strong>Email :</strong> <span class="ms-2">
+                            @Model.Employee.Email
+                        </span>
+                    </p>
+                    <p class="text-muted mb-2 font-13">
+                        <strong>Mã số thuế :</strong> <span class="ms-2">
+                            Profile.Tax
+                        </span>
+                    </p>
+                    <p class="text-muted mb-2 font-13">
+                        <strong>Ngày sinh :</strong><span class="ms-2">
+                            Profile.DateOfBird
+                        </span>
+                    </p>
+                    <p class="text-muted mb-2 font-13">
+                        <strong>Tình trạng hôn nhân :</strong><span class="ms-2">
+                            Profile.MaritalStatus
+                        </span>
+                    </p>
+                </div>
+
+                <hr />
+
+                <div class="text-start mt-3">
+                    <h4 class="font-13 text-uppercase">Hộ khẩu thường trú</h4>
+                    <p class="text-muted font-13 mb-3">
+                        Số 14 ngõ 18 P. Võ Van Dũng, P. O chợ dừa, Đống Đa, Hà Nội
+                    </p>
+                    <h4 class="font-13 text-uppercase">Địa chỉ hiện tại</h4>
+                    <p class="text-muted font-13 mb-3">
+                        Số 14 ngõ 18 P. Võ Van Dũng, P. O chợ dừa, Đống Đa, Hà Nội
+                    </p>
+                </div>
+                <ul class="social-list list-inline mt-3 mb-0">
+                    <li class="list-inline-item">
+                        <a href="javascript: void(0);" class="social-list-item border-primary text-primary"><i class="mdi mdi-facebook"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="javascript: void(0);" class="social-list-item border-danger text-danger"><i class="mdi mdi-google"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="javascript: void(0);" class="social-list-item border-info text-info"><i class="mdi mdi-twitter"></i></a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="javascript: void(0);" class="social-list-item border-secondary text-secondary"><i class="mdi mdi-github"></i></a>
+                    </li>
+                </ul>
+            </div> <!-- end card-body -->
+        </div>
+    </div><!-- end col-->
+
+    <div class="col-xxl-8">
+        <div class="card">
+            <div class="card-body">
+                <ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
+                    <li class="nav-item">
+                        <a href="#nhansu" data-bs-toggle="tab" aria-expanded="false" class="nav-link active rounded-0">
+                            <i class="mdi mdi-settings-outline d-md-none d-block"></i>
+                            <span class="d-none d-md-block">Nhân sự</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#congtac" data-bs-toggle="tab" aria-expanded="false" class="nav-link rounded-0">
+                            <i class="mdi mdi-settings-outline d-md-none d-block"></i>
+                            <span class="d-none d-md-block">Công tác</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#daotao" data-bs-toggle="tab" aria-expanded="false" class="nav-link rounded-0">
+                            <i class="mdi mdi-settings-outline d-md-none d-block"></i>
+                            <span class="d-none d-md-block">Đào tạo</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#baohiem" data-bs-toggle="tab" aria-expanded="false" class="nav-link rounded-0">
+                            <i class="mdi mdi-settings-outline d-md-none d-block"></i>
+                            <span class="d-none d-md-block">Bảo hiểm</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <!-- tab nhan su -->
+                    <div class="tab-pane show active" id="nhansu">
+                            <h5 class="mb-2 text-uppercase bg-light p-2"><i class="mdi mdi-bank mr-1"></i> Tài khoản ngân hàng</h5>
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="border rounded p-2 mb-2">
+                                        <ul class="list-inline mb-2">
+                                            <li class="list-inline-item font-16 fw-semibold"><a href="javascript:void(0);" class="text-secondary">Tài khoản nhận lương</a></li>
+                                        </ul>
+                                        <p class="text-muted mb-0">23124124134</p>
+                                        <p class="text-muted mb-0"><i class="mdi mdi-bank"></i> <b>Vietcombank</b></p>
+                                        <p class="text-muted mb-0"><i class="mdi mdi-account"></i> <b>@Model.Employee.Name</b></p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="border rounded p-2 mb-2">
+                                        <ul class="list-inline mb-2">
+                                            <li class="list-inline-item font-16 fw-semibold"><a href="javascript:void(0);" class="text-secondary">Tài khoản cá nhân</a></li>
+                                        </ul>
+                                        <p class="text-muted mb-0">12344556</p>
+                                        <p class="text-muted mb-0"><i class="mdi mdi-bank"></i> <b>Teckcombank</b></p>
+                                        <p class="text-muted mb-0"><i class="mdi mdi-account"></i> <b>@Model.Employee.Name</b></p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="border-dashed border-2 border rounded p-2 mb-2 d-flex align-items-center justify-content-center">
+                                        <a href="javascript:void(0);" class="text-center text-muted p-2" data-bs-toggle="modal" data-bs-target="#CreateProject">
+                                            <i class="mdi mdi-plus h3 my-0"></i> <h4 class="font-16 mt-1 mb-0 d-block">Add New</h4>
+                                        </a>
+                                    </div>
+                                </div> <!-- end col -->
+                            </div> <!-- end row -->
+                            <h5 class="mb-2 text-uppercase bg-light p-2"><i class="mdi mdi-calculator-variant-outline mr-1"></i> Giấy tờ</h5>
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="border rounded p-2 mb-2">
+                                        <ul class="list-inline mb-2">
+                                            <li class="list-inline-item font-16 fw-semibold"><a href="javascript:void(0);" class="text-secondary">Căn cước công dân</a></li>
+                                        </ul>
+                                        <p class="text-muted mb-0">23124124134</p>
+                                        <p class="text-muted mb-0"><i class="mdi mdi-home "></i> <b>Xóm 10 Xã Quỳnh Lâm, Quỳnh Lưu, Nghệ An</b></p>
+                                        <p class="text-muted mb-0"><i class="mdi mdi-account"></i> <b>@Model.Employee.Name</b></p>
+                                        <p class="text-muted mb-0"><i class="mdi mdi-calendar"></i> <b>20/01/2008</b></p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="border rounded p-2 mb-2">
+                                        <ul class="list-inline mb-2">
+                                            <li class="list-inline-item font-16 fw-semibold"><a href="javascript:void(0);" class="text-secondary">Chứng minh nhân dân</a></li>
+                                        </ul>
+                                        <p class="text-muted mb-0">23124124134</p>
+                                        <p class="text-muted mb-0"><i class="mdi mdi-home "></i> <b>Xóm 10 Xã Quỳnh Lâm, Quỳnh Lưu, Nghệ An</b></p>
+                                        <p class="text-muted mb-0"><i class="mdi mdi-account"></i> <b>@Model.Employee.Name</b></p>
+                                        <p class="text-muted mb-0"><i class="mdi mdi-calendar"></i> <b>20/01/2008</b></p>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="border-dashed border-2 border rounded p-2 mb-2 d-flex align-items-center justify-content-center">
+                                        <a href="javascript:void(0);" class="text-center text-muted p-2" data-bs-toggle="modal" data-bs-target="#CreateProject">
+                                            <i class="mdi mdi-plus h3 my-0"></i> <h4 class="font-16 mt-1 mb-0 d-block">Add New</h4>
+                                        </a>
+                                    </div>
+                                </div> <!-- end col -->
+                            </div> <!-- end row -->
+                            <h5 class="mb-2 text-uppercase bg-light p-2"><i class="mdi mdi-card-account-details mr-1"></i> Nhân thân</h5>
+                            <div class="table-responsive">
+                                <table class="table table-borderless table-nowrap mb-0">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Tên</th>
+                                            <th>Quan hệ</th>
+                                            <th>Số DT</th>
+                                            <th>Số CMT</th>
+                                            <th>Địa chỉ</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td><img src="/assets/images/users/avatar-1.jpg" alt="table-user" class="mr-2 rounded-circle" height="24"> Nguyễn Thị Lan</td>
+                                            <td>Vợ</td>
+                                            <td>0982223333</td>
+                                            <td>123445565</td>
+                                            <td>số 14/18 Võ Văn Dũng</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td><img src="/assets/images/users/avatar-1.jpg" alt="table-user" class="mr-2 rounded-circle" height="24"> Nguyễn Văn Nam</td>
+                                            <td>Con</td>
+                                            <td>0982223333</td>
+                                            <td>123445565</td>
+                                            <td>số 14/18 Võ Văn Dũng</td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td><img src="/assets/images/users/avatar-1.jpg" alt="table-user" class="mr-2 rounded-circle" height="24"> Nguyễn Thị Hiền</td>
+                                            <td>Mẹ đẻ</td>
+                                            <td>0982223333</td>
+                                            <td>123445565</td>
+                                            <td>số 14/18 Võ Văn Dũng</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                           
+                    </div>
+                    <!-- end about me section content -->
+                    <div class="tab-pane" id="congtac">
+                        <h5 class="mb-2 text-uppercase bg-light p-2"><i class="mdi mdi-office-building mr-1"></i> Quá trình công tác</h5>
+                        <div class="timeline-alt pb-0">
+                            <div class="timeline-item">
+                                <i class="mdi mdi-circle bg-info-lighten text-info timeline-icon"></i>
+                                <div class="timeline-item-info">
+                                    <h5 class="mt-0 mb-1">Chuyên viên phân tích nghiệp vụ</h5>
+                                    <p class="font-14">Đơn vị: NDU6 <span class="font-12">Thời gian: 01/01/2022 - nay</span></p>
+                                    <p class="text-muted">Theo quyết định số QD/123455</p>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <i class="mdi mdi-circle bg-info-lighten text-info timeline-icon"></i>
+                                <div class="timeline-item-info">
+                                    <h5 class="mt-0 mb-1">Nhân viên phân tích nghiệp vụ</h5>
+                                    <p class="font-14">Đơn vị: NDU6 <span class="font-12">Thời gian: 01/01/2021 - 31/12/2021</span></p>
+                                    <p class="text-muted">Theo quyết định số QD/123455</p>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <i class="mdi mdi-circle bg-info-lighten text-info timeline-icon"></i>
+                                <div class="timeline-item-info">
+                                    <h5 class="mt-0 mb-1"> Phân tích nghiệp vụ</h5>
+                                    <p class="font-14">Đơn vị: NDU6 <span class="font-12">Thời gian: 01/01/2020 - 31/12/2020</span></p>
+                                    <p class="text-muted">Theo quyết định số QD/123455</p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- end timeline -->
+                        <h5 class="mb-2 text-uppercase bg-light p-2"><i class="mdi mdi-script-text-outline mr-1"></i> Hợp đồng</h5>
+                        <div class="table-responsive">
+                            <table class="table table-borderless table-nowrap mb-0">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Số HĐ</th>
+                                        <th>Họ và Tên</th>
+                                        <th>Vị trí</th>
+                                        <th>Loại HĐ</th>
+                                        <th>Hiệu lực</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>HD123455</td>
+                                        <td><img src="/assets/images/users/avatar-1.jpg" alt="table-user" class="mr-2 rounded-circle" height="24"> @Model.Employee.Name</td>
+                                        <td>Chuyên viên lập trình</td>
+                                        <td>Không xác định thời hạn</td>
+                                        <td><a href="#" class="badge bg-success">Running</a></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h5 class="mb-2 text-uppercase bg-light p-2"><i class="mdi mdi-hammer mr-1"></i> Quyết định</h5>
+
+                        <div class="table-responsive">
+                            <table class="table table-borderless table-nowrap mb-0">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Người ra QĐ</th>
+                                        <th>Loại QĐ</th>
+                                        <th>Số QĐ</th>
+                                        <th>Cấp HĐ</th>
+                                        <th>Ngày ký HĐ</th>
+                                        <th>Hiệu lực</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td><img src="/assets/images/users/avatar-1.jpg" alt="table-user" class="mr-2 rounded-circle" height="24"> Lương Vũ Nam</td>
+                                        <td>Điều chỉnh lương</td>
+                                        <td>KT123455</td>
+                                        <td>Công ty</td>
+                                        <td>01/01/2020</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td><img src="/assets/images/users/avatar-1.jpg" alt="table-user" class="mr-2 rounded-circle" height="24"> Lương Vũ Nam</td>
+                                        <td>Điều chỉnh lương</td>
+                                        <td>KT123455</td>
+                                        <td>Công ty</td>
+                                        <td>01/01/2020</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td><img src="/assets/images/users/avatar-1.jpg" alt="table-user" class="mr-2 rounded-circle" height="24"> Lương Vũ Nam</td>
+                                        <td>Khen thưởng</td>
+                                        <td>KT123455</td>
+                                        <td>Công ty</td>
+                                        <td>01/01/2020</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                    <!-- end timeline content-->
+                    <div class="tab-pane" id="daotao">
+                        <h5 class="mb-2 text-uppercase bg-light p-2"><i class="mdi mdi-certificate mr-1"></i> Bằng cấp</h5>
+                        <div class="table-responsive">
+                            <table class="table table-sm table-centered mb-0 font-14">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Bằng cấp </th>
+                                        <th>Chuyên ngành</th>
+                                        <th>Xếp loại</th>
+                                        <th>Năm tốt nghiệp</th>
+                                        <th>Trường</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Đại học</td>
+                                        <td>CNTT</td>
+                                        <td>Tốt</td>
+                                        <td>2012</td>
+                                        <td>Đại học bách khoa</td>
+                                        <td class="d-flex justify-content-end">
+                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-eye"></i></a>
+                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                            <a href="javascript:void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div> <!-- end table-responsive-->
+
+                        <h5 class="mb-2 text-uppercase bg-light p-2"><i class="mdi mdi-school mr-1"></i> Khóa học</h5>
+
+                        <div class="table-responsive">
+                            <table class="table table-borderless mb-0">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Loại hình</th>
+                                        <th>Nội dung &amp; thời gian </th>
+                                        <th>Hình thức</th>
+                                        <th>Địa điểm</th>
+                                        <th>Đơn vị tổ chức</th>
+                                        <th>Kết quả</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Thi chứng chỉ</td>
+                                        <td>
+                                            SAP Certified Application Associate - SAP S/4HANA for Management Accounting Associates(SAP S/4HANA 1909)
+                                            <p>Từ 06 - 10/08/2022</p>
+                                        </td>
+                                        <td>Trực tuyến</td>
+                                        <td></td>
+                                        <td>SAP</td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Khóa học</td>
+                                        <td>
+                                            Đào tạo báo cáo tài chính chuẩn IFRS
+                                            <p>Từ 06 - 10/08/2022</p>
+                                        </td>
+                                        <td>Trực tiếp</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Khóa học</td>
+                                        <td>
+                                            Đào tạo nội bộ hệ thống BPC
+                                            <p>Từ 06 - 10/08/2022</p>
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>0</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- tab bao hiem-->
+                    <div class="tab-pane" id="baohiem">
+                        <h5 class="mb-2 text-uppercase bg-light p-2"><i class="mdi mdi-clipboard-list mr-1"></i> Thủ tục onboard</h5>
+                        <div class="table-responsive">
+                            <table class="table table-sm table-centered mb-0 font-14">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Tên công việc</th>
+                                        <th>PIC</th>
+                                        <th>Trạng thái</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Gửi email mời phỏng vấn</td>
+                                        <td>
+                                            Nguyễn Thị Hương
+                                        </td>
+                                        <td>
+                                            <a href="#" class="badge bg-success">Hoàn thành</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Gửi Offer letter</td>
+                                        <td>
+                                            Nguyễn Thị Hương
+                                        </td>
+                                        <td>
+                                            <a href="#" class="badge bg-success">Hoàn thành</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Gửi thư mời làm việc</td>
+                                        <td>
+                                            Nguyễn Thị Ánh Sáng
+                                        </td>
+                                        <td>
+                                            <a href="#" class="badge bg-success">Hoàn thành</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>Gửi thông tin đào tạo hội nhập cho ứng viên</td>
+                                        <td>
+                                            Phạm Thị Hường
+                                        </td>
+                                        <td>
+                                            <a href="#" class="badge bg-success">Hoàn thành</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div> <!-- end table-responsive-->
+
+                        <h5 class="mb-2 text-uppercase bg-light p-2"><i class="mdi mdi-account-group mr-1"></i> Hội đồng tuyển dụng</h5>
+                        <div class="table-responsive">
+                            <table class="table table-sm table-centered mb-0 font-14">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Tên</th>
+                                        <th>Vị trí</th>
+                                        <th>Ghi chú</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Lương Vũ Nam</td>
+                                        <td>CEO</td>
+                                        <td>
+                                            Giải đáp về chế độ, lương thưởng của công ty
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Trần Ngọc Đức</td>
+                                        <td>CTO</td>
+                                        <td>
+                                            Phỏng vấn chuyên môn
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Lê Văn Thành </td>
+                                        <td>Lập trình viên</td>
+                                        <td>
+                                            Dự thính
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div> <!-- end table-responsive-->
+
+
+                        <h5 class="mb-2 text-uppercase bg-light p-2"><i class="mdi mdi-clipboard-account mr-1"></i> CV</h5>
+
+                        <div class="table-responsive">
+                            <table class="table table-borderless mb-0">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Tên CV </th>
+                                        <th>Nguồn</th>
+                                        <th>Ngày ứng tuyển</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>
+                                            Tên CV ứng viên.pdf
+                                        </td>
+                                        <td>Vietnamwork.com.vn</td>
+                                        <td>20/12/2021</td>
+                                        <td>
+                                            <a href="javascript:void(0);" data-toggle="tooltip" data-placement="bottom" title="" class="btn btn-link text-muted btn-lg p-0" data-original-title="Download">
+                                                <i class="uil uil-cloud-download"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- end settings content-->
+                </div> <!-- end tab-content -->
+            </div> <!-- end card body -->
+        </div> <!-- end card -->
+    </div><!-- end col-->
+</div>

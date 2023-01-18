@@ -1,0 +1,80 @@
+﻿@page
+@using HD.Profiles.Localization
+@using Microsoft.Extensions.Localization
+@using HD.Profiles.Organizations
+
+@inject IStringLocalizer<ProfilesResource> Localizer
+@model HD.Profiles.Web.Pages.Organizations.AppointModel
+@{
+    Layout = null;
+    var appointmentType = new List<SelectListItem>();
+    appointmentType.Add(new SelectListItem() { Text = "Bổ nhiệm", Value = "" });
+    appointmentType.Add(new SelectListItem() { Text = "Kiêm nhiệm", Value = "" });
+    appointmentType.Add(new SelectListItem() { Text = "Bãi nhiệm", Value = "" });
+}
+
+<div class="modal-header">
+    <h4 class="modal-title" id="standard-modalLabel">@Localizer["Appointment"]</h4>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+</div>
+<div class="modal-body">
+    <form id="confirm-form" asp-action="@ViewContext.RouteData.Values["action"]" method="post" role="form">
+        <div class="form-group">
+            <div class="mb-3">
+                <label asp-for="Form.EmployeeId" class="form-label">@Localizer["Employees"]</label>
+                <select asp-for="Form.EmployeeId" asp-items="Model.Employees" class="form-control"></select>
+                <span asp-validation-for="Form.EmployeeId"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Form.Name" class="form-label">@Localizer["Name"]</label>
+                <input type="text" asp-for="Form.Name" class="form-control" required>
+                <span asp-validation-for="Form.Name"></span>
+            </div>
+            <div class="mb-3">
+                <label  class="form-label">@Localizer["Appoinment Type"]</label>
+                <select asp-items="appointmentType" class="form-control"></select>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Form.StartDate" class="form-label">@Localizer["Start Date"]</label>
+                <input type="date" asp-for="Form.StartDate" class="form-control" required>
+                <span asp-validation-for="Form.StartDate"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Form.EndDate" class="form-label">@Localizer["End Date"]</label>
+                <input type="date" asp-for="Form.EndDate" class="form-control" required>
+                <span asp-validation-for="Form.EndDate"></span>
+            </div>
+            <input type="text" asp-for="Form.OrganizationId" class="gu-hide">
+            <input type="text" asp-for="Form.JobPositionId" class="gu-hide">
+            <input type="text" asp-for="Form.Id" class="gu-hide">
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+    <button type="button" onclick="$('#confirm-form').submit()" class="btn btn-primary">Save changes</button>
+</div>
+
+<script>
+
+    $("#confirm-form").unbind();
+
+    $('#confirm-form').submit(function () {
+        $.ajax({
+            data: $(this).serialize(),
+            type: $(this).attr('method'),
+            url: $(this).attr('action'),
+            success: function (response) {
+                console.log(typeof response);
+                if (typeof response === "object") {
+                    console.log(response);
+                    //$("#danger-alert-modal").modal('toggle');
+                    document.location.reload();
+                } else {
+                    $("#content-modal-danger").html(response);
+                }
+            }
+        });
+        return false;
+    });
+</script>

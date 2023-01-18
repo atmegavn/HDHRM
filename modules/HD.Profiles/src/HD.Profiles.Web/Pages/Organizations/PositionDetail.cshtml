@@ -1,0 +1,134 @@
+﻿@page
+@using HD.Profiles.Localization
+@using Microsoft.Extensions.Localization
+@using HD.Profiles.Organizations
+
+@inject IStringLocalizer<ProfilesResource> Localizer
+
+@model HD.Profiles.Web.Pages.Organizations.PositionDetailModel
+@{
+    var currentUrl = $"{Request.PathBase}{Request.Path}{Request.QueryString}";
+    ViewBag.Title = @Localizer["Create Organization"].ToString();
+    var backUrl = Model.BackUrl;
+    var total = Model.Positions.Count();
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-right">
+                <div class="app-search">
+                    <form>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search..." />
+                            <span class="mdi mdi-magnify search-icon"></span>
+                            <button class="input-group-text btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Tất cả
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <a class="dropdown-item" href="#">Chưa bổ nhiệm</a>
+                                <a class="dropdown-item" href="#">Đã bổ nhiệm</a>
+                                <a class="dropdown-item" href="#">Đang tuyển</a>
+                                <a class="dropdown-item" href="#">Sắp hết hạn hợp đồng</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <h4 class="page-title">@Model.Form.Name</h4>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-4">
+        <a class="btn btn-sm btn-primary" href="@Url.Page("CreatePosition", new { backUrl = currentUrl, id=Model.Form.Id })"><i class="mdi mdi-plus"></i> @Localizer["Create"]</a>
+        <a class="btn btn-sm btn-secondary" href="@Url.Page("Edit", new { backUrl = currentUrl, id=Model.Form.Id })"><i class="mdi mdi-pencil"></i> @Localizer["Edit"]</a>
+
+        <a href="@Html.Raw(Model.BackUrl)" class="btn btn-sm btn-secondary">
+            <span class="mdi mdi-keyboard-return"></span> @Localizer["Back"]
+        </a>
+    </div>
+    <div class="col-8 d-flex justify-content-end">
+        <div class="btn-group ms-1">
+            <button class="btn btn-light dropdown-toggle" type="button" id="employee_sorter" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="mdi mdi-sort"></i>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="employee_sorter">
+                <a class="dropdown-item" href="#">Sắp xếp theo Tên</a>
+                <a class="dropdown-item" href="#">Sắp xếp theo Cấp bậc</a>
+                <a class="dropdown-item" href="#">Sắp xếp theo Trạng thái bổ nhiệm</a>
+            </div>
+        </div>
+        <div class="btn-group ms-1">
+            <a class="btn btn-light " href="#" tabindex="-1" aria-disabled="true"><i class="mdi mdi-arrow-left-bold"></i></a>
+            <a class="btn btn-light">
+                1 - @total của @total bản ghi
+            </a>
+            <a class="btn btn-light" href="#"><i class="mdi mdi-arrow-right-bold"></i></a>
+        </div>
+        <div class="btn-group ms-1 ">
+            <button type="button" class="btn btn-sm btn-light"><i class="mdi mdi-view-grid"></i></button>
+            <button type="button" class="btn btn-sm btn-link"><i class="mdi mdi-view-list"></i></button>
+        </div>
+    </div>
+</div>
+<hr />
+<div class="row">
+    @foreach (var position in Model.Positions)
+    {
+        <div class="col-sm-6 col-xl-3 mb-3">
+            <div class="card mb-0 h-100">
+                <div class="card-body">
+                    <div class="dropdown float-end">
+                        <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="mdi mdi-dots-horizontal"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <!-- item-->
+                            <a href="javascript:void(0);" class="dropdown-item"><i class="mdi mdi-plus-circle me-1"></i> Yêu cầu tuyển dụng vị trí này</a>
+                            <a  href="javascript:void(0);" onclick="openlangerModal(this)" url="@Url.Page("Appoint", new { backUrl=currentUrl, id=position.Id })" class="dropdown-item"><i class="mdi mdi-account-multiple-check me-1"></i> Bổ nhiệm vị trí này</a>
+                            <!-- item-->
+                            <!-- item-->
+                            <a href="javascript:void(0);" class="dropdown-item"><i class="mdi mdi-square-edit-outline me-1"></i> Sửa</a>
+                            <!-- item-->
+                            <hr class="dropdown-divider">
+                            <a href="javascript:void(0);" class="dropdown-item text-danger"><i class="mdi mdi-trash-can-outline me-1"></i> Xóa</a>
+                        </div>
+                    </div>
+                    <h4 class="header-title">@position.Name</h4>
+                    <h5 class="text-muted fw-normal mt-0 text-truncate" title="Campaign Sent">@position.Job.Level @position.Job.Name</h5>
+
+                    <div class="d-flex align-items-center mt-4">
+                        @{
+                            if (position.EmployeeId.HasValue)
+                            {
+                                <div class="flex-shrink-0">
+                                    <h5 class="font-13 text-success my-0"><i class="mdi mdi-check"></i> Đã bổ nhiệm</h5>
+                                </div>
+                                <div class="flex-grow-1 ms-2"> </div>
+                                <div class="text-end multi-user">
+                                    <a href="javascript:void(0);" class="d-inline-block">
+                                        <img src="/assets/images/users/avatar-1.jpg" class="rounded-circle avatar-xs" alt="friend">
+                                    </a>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="flex-shrink-0">
+                                    <h5 class="font-13 text-muted my-0"><i class="mdi mdi-clock-outline"></i> Chưa bồ nhiệm</h5>
+                                </div>
+                                <div class="flex-grow-1 ms-2"> </div>
+                                <div class="text-end multi-user">
+                                   
+                                </div>
+                            }
+                        }
+
+                    </div>
+                </div> <!-- end card-body -->
+            </div> <!-- end card -->
+        </div>
+    }
+
+</div>
