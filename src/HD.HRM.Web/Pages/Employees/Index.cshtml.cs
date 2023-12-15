@@ -1,4 +1,5 @@
 using HD.Profiles.Employees;
+using HD.Profiles.Organizations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
@@ -14,17 +15,25 @@ namespace HD.Profiles.Web.Pages.Employees
     public class IndexModel : ProfilesPageModel
     {
         private readonly IEmployeeAppService _employeeAppService;
+        private readonly IOrganizationAppService _organizationAppService;
         public PagedResultDto<EmployeeDto> Result { get; set; }
-        public PagedAndSortedResultRequestDto Params = new PagedAndSortedResultRequestDto();
-        public IndexModel(IEmployeeAppService employeeAppService)
+        public List<OrganizationDto> Organizations { get; set; }
+        public OrganizationDto Organization { get; set; }
+
+        public HrmRequestDto Params = new HrmRequestDto();
+        
+        public string View { get; set; }
+        public IndexModel(IEmployeeAppService employeeAppService, IOrganizationAppService organizationAppService)
         {
             _employeeAppService = employeeAppService;
+            _organizationAppService = organizationAppService;
         }
 
-        public async Task OnGetAsync(PagedAndSortedResultRequestDto input)
+        public async Task OnGetAsync(HrmRequestDto input)
         {
             Params = input;
             Result = await _employeeAppService.GetListAsync(input);
+            Organizations = await _organizationAppService.GetListSubOrganizationAsync(null);
         }
     }
 }

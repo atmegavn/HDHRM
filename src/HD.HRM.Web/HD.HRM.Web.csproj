@@ -94,4 +94,8 @@
     <None Include="wwwroot\assets\images\svg\startup.svg" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\Organizations\" />
+  </ItemGroup>
+
 </Project>

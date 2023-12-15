@@ -1,5 +1,6 @@
 ﻿@page
 @using HD.Profiles.Localization
+@using HD.Profiles;
 @using Microsoft.Extensions.Localization
 @using HD.Profiles.Web.Pages.Employees
 @using Volo.Abp.Application.Dtos;
@@ -15,8 +16,15 @@
     long endPage = currentPaging.SkipCount + currentPaging.MaxResultCount;
     if (endPage > totalCount) endPage = totalCount;
 
-    PagedAndSortedResultRequestDto nextPaging = new PagedAndSortedResultRequestDto();
-    PagedAndSortedResultRequestDto prevPaging = new PagedAndSortedResultRequestDto();
+    HrmRequestDto nextPaging = new HrmRequestDto();
+    HrmRequestDto prevPaging = new HrmRequestDto();
+
+    var view = currentPaging.View;
+    HrmRequestDto dashView = (HrmRequestDto) currentPaging.Clone();
+    dashView.View = "dashboard";
+
+    HrmRequestDto gridView = (HrmRequestDto) currentPaging.Clone();
+    gridView.View = "grid";
 
     nextPaging.SkipCount = currentPaging.SkipCount + currentPaging.MaxResultCount;
     nextPaging.MaxResultCount = currentPaging.MaxResultCount;
@@ -27,8 +35,11 @@
     var isDisablePrev = currentPaging.SkipCount == 0 ? "disabled" : "";
     var isDisableNext = endPage >= totalCount ? "disabled" : "";
 
-}
+    var isDash = currentPaging.View == "dashboard" ? "btn-primary" : "btn-light";
+    var isGrid = currentPaging.View == "grid" ? "btn-primary" : "btn-light";
+    var isList = currentPaging.View == "list" ? "btn-primary" : "btn-light";
 
+}
 <div class="row">
     <div class="col-12">
         <div class="page-title-box">
@@ -100,9 +111,9 @@
             <a class="btn btn-light @isDisableNext" href="@Url.Page("Index", nextPaging)"><i class="mdi mdi-arrow-right-bold"></i></a>
         </div>
         <div class="btn-group ms-1 ">
-            <button type="button" class="btn btn-light"><i class="mdi mdi-view-dashboard"></i></button>
-            <button type="button" class="btn btn-primary"><i class="mdi mdi-view-grid"></i></button>
-            <button type="button" class="btn btn-light"><i class="mdi mdi-view-list"></i></button>
+            <a href="@Url.Page("Index",dashView)" class="btn @isDash"><i class="mdi mdi-view-dashboard"></i></a>
+            <a href="@Url.Page("Index",gridView)" class="btn @isGrid"><i class="mdi mdi-view-grid"></i></a>
+            <a class="btn btn-light"><i class="mdi mdi-view-list"></i></a>
         </div>
     </div>
 </div>
@@ -113,29 +124,141 @@
 </div>
 
 <div class="row">
-
-    @foreach (var employee in Model.Result.Items)
+    @switch (view)
     {
-        <div class="col-md-6 col-xxl-3">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex">
-                        <div class="flex-shrink-0">
-                            <img class="rounded-circle avatar-sm" src="~/assets/images/users/avatar-1.jpg" alt="Avtar image">
+        case "grid":
+            @foreach (var employee in Model.Result.Items)
+            {
+                <div class="col-md-6 col-xxl-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <div class="flex-shrink-0">
+                                    <img class="rounded-circle avatar-sm" src="~/assets/images/users/avatar-1.jpg" alt="Avtar image">
+                                </div>
+                                <div class="flex-grow-1 ms-2">
+                                    <a href="@Url.Page("Detail",new {id=employee.Id })" class="text-secondary"><h5 class="my-1">@employee.Name</h5></a>
+                                    <p class="text-muted mb-0">@employee.JobTitle?.Name</p>
+                                </div>
+
+                            </div>
                         </div>
-                        <div class="flex-grow-1 ms-2">
-                            <a href="@Url.Page("Detail",new {id=employee.Id })" class="text-secondary"><h5 class="my-1">@employee.Name</h5></a>
-                            <p class="text-muted mb-0">@employee.JobTitle?.Name</p>
+                        <div class="d-flex justify-content-between align-items-center card-body py-2 border-top border-light">
+                            <h5 class="my-0 font-13 fw-semibold text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="Ngày vào công ty"><i class="mdi mdi-calendar me-1"></i> @employee.DateOfOnboard.ToString("dd/MM/yyyy")</h5>
+                            <a href="javascript:void(0);" class="text-muted" data-bs-toggle="modal" data-bs-target="#client-chat"><i class="mdi mdi-phone font-18" data-bs-toggle="tooltip" data-bs-placement="top" title="Call"></i></a>
                         </div>
-                        
                     </div>
                 </div>
-                <div class="d-flex justify-content-between align-items-center card-body py-2 border-top border-light">
-                    <h5 class="my-0 font-13 fw-semibold text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="Ngày vào công ty"><i class="mdi mdi-calendar me-1" ></i> @employee.DateOfOnboard.ToString("dd/MM/yyyy")</h5>
-                    <a href="javascript:void(0);" class="text-muted" data-bs-toggle="modal" data-bs-target="#client-chat"><i class="mdi mdi-phone font-18" data-bs-toggle="tooltip" data-bs-placement="top" title="Call"></i></a>
-                </div>
-            </div>
-        </div>
-    }
+            }
+            break;
 
+        case "dashboard":
+            <text>
+                <div class="col-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="header-title mb-3">Cây tổ chức</h4>
+                            <input class="form-control">
+                            <div id="jstree-1" class="mt-1">
+                                <ul>
+                                    @foreach(var org in Model.Organizations)
+                                    {
+                                        if(org.Childrent.Count > 0)
+                                        {
+                                            <li id="@org.Id">
+                                                @org.Name
+                                                <ul>
+                                                    @foreach(var child in org.Childrent)
+                                                    {
+                                                        <li id="@child.Id" >@child.Name</li> 
+                                                    }
+                                                </ul>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li id="@org.Id" >@org.Name</li>
+                                        }
+                                        
+                                    }
+                                  
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h4 class="header-title">Danh sách nhân viên</h4>
+                            <div class="d-flex align-items-center">
+                                <input class="form-control mr-2" style="width: 200px;" placeholder="Search">
+                                <div class="dropdown">
+                                    <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="mdi mdi-dots-vertical"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-end" style="">
+                                        <!-- item-->
+                                        <a href="javascript:void(0);" class="dropdown-item">Today</a>
+                                        <!-- item-->
+                                        <a href="javascript:void(0);" class="dropdown-item">Yesterday</a>
+                                        <!-- item-->
+                                        <a href="javascript:void(0);" class="dropdown-item">Last Week</a>
+                                        <!-- item-->
+                                        <a href="javascript:void(0);" class="dropdown-item">Last Month</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="card-body pt-0">
+                            <div class="table-responsive mt-n2">
+                                <table class="table table-centered table-hover table-nowrap mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Họ tên</th>
+                                            <th>Email</th>
+                                            <th>Project Name</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach(var emp in Model.Result.Items)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="flex-shrink-0">
+                                                            <img class="rounded-circle" src="assets/images/users/avatar-1.jpg" alt="Avtar image" width="31">
+                                                        </div>
+                                                        <div class="flex-grow-1 ms-2">
+                                                            @emp.Name
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>@emp.Email</td>
+                                                <td>@emp.JobTitle.Name</td>
+                                                <td>
+                                                    <span class="badge bg-primary-lighten text-primary">In Progress</span>
+                                                </td>
+                                                <td>
+                                                    <a href="javascript:void(0);" class="font-18 text-info me-2" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Edit"><i class="uil uil-pen"></i></a>
+                                                    <a href="javascript:void(0);" class="font-18 text-danger" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Delete"><i class="uil uil-trash"></i></a>
+                                                </td>
+                                            </tr> 
+                                        }
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </text>
+        break;
+    }
 </div> <!-- End row -->
+
+<script src="~/assets/js/employees/index.js"></script>
