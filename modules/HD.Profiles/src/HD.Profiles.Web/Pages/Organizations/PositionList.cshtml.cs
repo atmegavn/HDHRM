@@ -13,6 +13,8 @@ namespace HD.Profiles.Web.Pages.Organizations
     {
         public JobDto Form { get; set; }
         public List<JobPositionDto> Positions { get; set; }
+        public string OrgName { get; set; }
+        public Guid OrgId { get; set; }
 
         public string BackUrl { get; set; }
         private readonly IOrganizationAppService _organizationAppService;
@@ -27,6 +29,9 @@ namespace HD.Profiles.Web.Pages.Organizations
         {
             Form = await _jobAppService.GetAsync(id);
             Positions = await _organizationAppService.ListPositionsOfOrganization(orgId, id);
+            var org = await _organizationAppService.GetAsync(orgId);
+            OrgName = org.Name;
+            OrgId = org.Id;
             BackUrl = backUrl;
         }
     }

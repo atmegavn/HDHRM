@@ -69,6 +69,16 @@
                     <input type="text" asp-for="Form.Name" class="form-control" required>
                     <span asp-validation-for="Form.Name"></span>
                 </div>
+                <div class="mb-3">
+                    <label asp-for="Form.JobDescription" class="form-label">@Localizer["Job Description"]</label>
+                    <textarea asp-for="Form.JobDescription" class="form-control" placeholder="Description of job here"></textarea>
+                    <span asp-validation-for="Form.JobDescription"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Form.JobRequirement" class="form-label">@Localizer["Job Requirement"]</label>
+                    <textarea asp-for="Form.JobRequirement" class="form-control" placeholder="Requirement of job here"></textarea>
+                    <span asp-validation-for="Form.JobRequirement"></span>
+                </div>
                
                 <input type="text" asp-for="Form.OrganizationId" class="gu-hide">
                 <input type="text" asp-for="Form.BackUrl" class="gu-hide">

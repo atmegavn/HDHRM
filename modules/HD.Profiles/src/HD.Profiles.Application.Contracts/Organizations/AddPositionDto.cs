@@ -15,6 +15,8 @@ namespace HD.Profiles.Organizations
         [Required]
         [StringLength(256)]
         public string Name { get; set; }
+        public string JobDescription { get; set; }
+        public string JobRequirement { get; set; }
         [Required]
         public Guid OrganizationId { get; set; }
         public Guid JobPositionId { get; set; }

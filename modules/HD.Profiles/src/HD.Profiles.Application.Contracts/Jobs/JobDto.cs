@@ -11,6 +11,7 @@ namespace HD.Profiles.Jobs
         public string Description { get; set; }
         public string Requirement { get; set; }
         public int PositionClass { get; set; }
+        public Guid JobFamilyId { get; set; }
         public JobFamilyDto JobFamily { get; set; }
         public JobLevel Level { get; set; }
     }

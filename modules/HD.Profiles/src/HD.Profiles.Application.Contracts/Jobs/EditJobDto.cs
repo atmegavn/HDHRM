@@ -4,8 +4,9 @@ using System.Text;
 
 namespace HD.Profiles.Jobs
 {
-    public class CreateJobDto
+    public class EditJobDto
     {
+        public Guid Id { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

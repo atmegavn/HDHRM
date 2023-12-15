@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HD.Profiles.Organizations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,6 +27,7 @@ namespace HD.Profiles.Jobs
             job.Description = form.Description;
             job.JobFamilyId = form.JobFamilyId;
             job.Requirement = form.Requirement;
+            job.Level = form.Level;
             await _jobRepository.InsertAsync(job);
 
             return ObjectMapper.Map<Job, JobDto>(job);
@@ -65,6 +67,20 @@ namespace HD.Profiles.Jobs
 
             var result = new PagedResultDto<JobFamilyDto>(count, ObjectMapper.Map<List<JobFamily>, List<JobFamilyDto>>(data));
             return result;
+        }
+
+        public async Task<JobDto> UpdateAsync(Guid id, JobDto input)
+        {
+            var job = await _jobRepository.GetAsync(id);
+            job.Name = input.Name;
+            job.Description = input.Description;
+            job.Level = input.Level;    
+            job.JobFamilyId = input.JobFamilyId;
+            job.Requirement = input.Requirement;
+
+            var updatedJob = await _jobRepository.UpdateAsync(job);
+
+            return ObjectMapper.Map<Job, JobDto>(updatedJob);
         }
     }
 }

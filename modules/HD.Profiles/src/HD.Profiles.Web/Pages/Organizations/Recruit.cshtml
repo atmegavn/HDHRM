@@ -1,0 +1,21 @@
+﻿@page
+@using HD.Profiles.Localization
+@using Microsoft.Extensions.Localization
+
+@inject IStringLocalizer<ProfilesResource> Localizer
+@model HD.Profiles.Web.Pages.Organizations.RecruitModel
+@{
+    Layout = null;
+}
+
+<div class="modal-header">
+    <h4 class="modal-title" id="standard-modalLabel">@Localizer["Create Recruitment Request"]</h4>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+</div>
+<div class="modal-body">
+    <i>Recruitment request form here...</i>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+    <button type="button" class="btn btn-primary">Save changes</button>
+</div>

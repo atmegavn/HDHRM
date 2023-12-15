@@ -239,7 +239,10 @@ public static class ProfilesDbContextModelCreatingExtensions
             b.HasMany(p => p.Contacts).WithOne().HasForeignKey(r => r.OrganizationId).OnDelete(DeleteBehavior.NoAction).IsRequired();
             b.HasMany(p => p.Address).WithOne().HasForeignKey(r => r.OrganizationId).OnDelete(DeleteBehavior.NoAction).IsRequired();
             b.HasMany(p => p.BankAccounts).WithOne().HasForeignKey(r => r.OrganizationId).OnDelete(DeleteBehavior.NoAction).IsRequired();
-            b.HasOne(p => p.Parent).WithMany().HasForeignKey(p => p.ParentId).OnDelete(DeleteBehavior.NoAction).IsRequired();
+            
+            b.HasMany(p => p.Childrent).WithOne(p => p.Parent).HasForeignKey(r => r.ParentId).OnDelete(DeleteBehavior.NoAction).IsRequired();
+            
+            //b.HasOne(p => p.Parent).WithMany(p => p.Childrent).HasForeignKey(p => p.ParentId).OnDelete(DeleteBehavior.NoAction).IsRequired();
         });
 
         builder.Entity<Bank>(b =>

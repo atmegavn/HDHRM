@@ -5,7 +5,7 @@
 
 @inject IStringLocalizer<ProfilesResource> Localizer
 
-@model HD.Profiles.Web.Pages.Organizations.PositionDetailModel
+@model HD.Profiles.Web.Pages.Organizations.PositionListModel
 @{
     var currentUrl = $"{Request.PathBase}{Request.Path}{Request.QueryString}";
     ViewBag.Title = @Localizer["Create Organization"].ToString();
@@ -22,6 +22,7 @@
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Search..." />
                             <span class="mdi mdi-magnify search-icon"></span>
+                            <input type="month" class="form-control" />
                             <button class="input-group-text btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Tất cả
                             </button>
@@ -30,20 +31,21 @@
                                 <a class="dropdown-item" href="#">Đã bổ nhiệm</a>
                                 <a class="dropdown-item" href="#">Đang tuyển</a>
                                 <a class="dropdown-item" href="#">Sắp hết hạn hợp đồng</a>
+                                <a class="dropdown-item" href="#">Sắp nghỉ việc</a>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
-            <h4 class="page-title">@Model.Form.Name</h4>
+            <h4 class="page-title">@Model.Form.Name at @Model.OrgName</h4>
         </div>
     </div>
 </div>
 
 <div class="row">
     <div class="col-4">
-        <a class="btn btn-sm btn-primary" href="@Url.Page("CreatePosition", new { backUrl = currentUrl, id=Model.Form.Id })"><i class="mdi mdi-plus"></i> @Localizer["Create"]</a>
-        <a class="btn btn-sm btn-secondary"  onclick="openlangerModal(this)" url="@Url.Page("PositionEdit", new { backUrl=currentUrl })"><i class="mdi mdi-pencil"></i> @Localizer["Edit"]</a>
+        <a class="btn btn-sm btn-primary" href="@Url.Page("PositionCreate", new { backUrl = currentUrl, id=Model.Form.Id })"><i class="mdi mdi-plus"></i> @Localizer["Create"]</a>
+        <a class="btn btn-sm btn-primary" onclick="openlangerModal(this)" url="@Url.Page("Recruit", new { backUrl=currentUrl })"><i class="mdi mdi-account-search"></i> @Localizer["Recuitment"]</a>
 
         <a href="@Html.Raw(Model.BackUrl)" class="btn btn-sm btn-secondary">
             <span class="mdi mdi-keyboard-return"></span> @Localizer["Back"]
@@ -79,32 +81,25 @@
     {
         <div class="col-sm-6 col-xl-3 mb-3">
             <div class="card mb-0 h-100">
-                <div class="card-body">
-                    <div class="dropdown float-end">
-                        <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="mdi mdi-dots-horizontal"></i>
+                <div class="d-flex card-header justify-content-between align-items-center p-2">
+                    <h5 class="header-title">@position.Name</h5>
+                    <div class="dropdown">
+                        <a href="#" class="dropdown-toggle arrow-none card-drop p-0" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="mdi mdi-dots-vertical"></i>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-end">
-                            <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item"><i class="mdi mdi-eye me-1"></i> Xem chi tiết</a>
+                        <div class="dropdown-menu dropdown-menu-end" style="">
+                            <a href="@Url.Page("PositionDetail", new {id=position.Id, backUrl = currentUrl })" class="dropdown-item"><i class="mdi mdi-eye me-1"></i> Xem chi tiết</a>
                             <a href="javascript:void(0);" class="dropdown-item"><i class="mdi mdi-plus-circle me-1"></i> Yêu cầu tuyển dụng</a>
                             <a href="javascript:void(0);" onclick="openlangerModal(this)" url="@Url.Page("Appoint", new { backUrl=currentUrl, id=position.Id })" class="dropdown-item"><i class="mdi mdi-account-multiple-check me-1"></i> Bổ nhiệm </a>
-                            <!-- item-->
-                            <!-- item-->
                             <a href="javascript:void(0);" class="dropdown-item"><i class="mdi mdi-square-edit-outline me-1"></i> Sửa</a>
-                            <!-- item-->
                             <hr class="dropdown-divider">
                             <a href="javascript:void(0);" class="dropdown-item text-danger"><i class="mdi mdi-trash-can-outline me-1"></i> Xóa</a>
                         </div>
                     </div>
-
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="@position.Id"> 
-                        <h4 class="header-title"><label class="form-check-label" for="@position.Id">@position.Name</label></h4>
-                    </div>
-                    <h5 class="text-muted fw-normal mt-0 text-truncate" title="Campaign Sent"> @position.Job.Level @position.Job.Name</h5>
-
-                    <div class="d-flex align-items-center mt-4">
+                </div>
+                <div class="card-body p-2">
+                    <h5 class="text-muted fw-normal mt-0 text-truncate" title="Campaign Sent"> @position.Job.Level</h5>
+                    <div class="d-flex align-items-center mt-3">
                         @{
                             if (position.EmployeeId.HasValue)
                             {
@@ -113,7 +108,7 @@
                                 </div>
                                 <div class="flex-grow-1 ms-2"> </div>
                                 <div class="text-end multi-user">
-                                    <a href="javascript:void(0);" class="d-inline-block">
+                                    <a href="javascript:void(0);" class="d-inline-block" data-bs-toggle="tooltip" data-bs-placement="top" title="Tên nhân viên">
                                         <img src="/assets/images/users/avatar-1.jpg" class="rounded-circle avatar-xs" alt="friend">
                                     </a>
                                 </div>

@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace HD.Profiles.Web.Pages.Organizations
 {
-    public class PositionDetailModel : PageModel
+    public class PositionEditModel : PageModel
     {
         public string BackUrl { get; set; }
         public JobPositionDto Form { get; set; }
         private readonly IJobPositionAppService _jobPositionAppService;
-        public PositionDetailModel(IJobPositionAppService jobPositionAppService)
+        public PositionEditModel(IJobPositionAppService jobPositionAppService)
         {
             _jobPositionAppService= jobPositionAppService;
         }

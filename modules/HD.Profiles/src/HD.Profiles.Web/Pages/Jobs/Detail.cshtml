@@ -1,6 +1,137 @@
 ﻿@page
+@using HD.Profiles.Localization
+@using HD.Profiles.Jobs
+@using Microsoft.Extensions.Localization
 @model HD.Profiles.Web.Pages.Jobs.DetailModel
+
+@inject IStringLocalizer<ProfilesResource> Localizer
 @{
+    var currentUrl = $"{Request.PathBase}{Request.Path}{Request.QueryString}";
+    var backUrl = Model.BackUrl;
 }
 
-ok
+<form id="create-story-form" class="needs-validation" asp-action="@ViewContext.RouteData.Values["action"]" method="post" role="form" novalidate>
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="@Url.Page("Index")">@Localizer["Job Positions"] </a></li>
+                        <li class="breadcrumb-item active">@Localizer["Detail"]</li>
+                    </ol>
+                </div>
+                <h4 class="page-title">@Model.Form.Name</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <a href="@Url.Page("Edit", new { backUrl = currentUrl, id=Model.Form.Id })" class="btn btn-sm btn-primary btn-">
+                <span class="mdi mdi-pencil"></span> @Localizer["Edit"]
+            </a>
+
+            <a href="@Html.Raw(Model.BackUrl)" class="btn btn-sm btn-secondary">
+                <span class="mdi mdi-keyboard-return"></span> @Localizer["Back"]
+            </a>
+        </div>
+    </div>
+    <hr />
+    @{
+        if (ViewData["Exception"] != null)
+        {
+            <div class="row">
+                <div class="col-12">
+                    <div class="alert alert-danger" role="alert">
+                        <i class="ri-close-circle-line me-2"></i> @ViewData["Exception"]
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    <div class="row">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title mt-0 mb-3">@Localizer["Job Info"]</h4>
+                    <div class="text-start">
+                        <p class="text-muted"><strong>Code :</strong> <span class="ms-2"></span></p>
+                        <p class="text-muted"><strong>Job Family :</strong> <span class="ms-2">@Model.Form.JobFamily?.Name</span></p>
+                        <p class="text-muted"><strong>Level :</strong><span class="ms-2">@Model.Form.Level</span></p>
+                    </div>
+                    <hr />
+                    <h4 class="header-title mt-0 mb-3">@Localizer["Job Description"]</h4>
+                    @{
+                        if (!string.IsNullOrEmpty(Model.Form.Description))
+                        {
+                            <i class="text-muted font-13">
+                                @Model.Form.Description
+                            </i>
+                        }
+                        else
+                        {
+                            <i class="text-muted font-13">
+                                there is no data here
+                            </i>
+                        }
+                    }
+                    <hr />
+                    <h4 class="header-title mt-0 mb-3">@Localizer["Job Requirement"]</h4>
+                    @{
+                        if (!string.IsNullOrEmpty(Model.Form.Requirement))
+                        {
+                            <p class="text-muted font-13">
+                                @Model.Form.Requirement
+                            </p>
+                        }
+                        else
+                        {
+                            <p class="text-muted font-13">
+                                there is no data here
+                            </p>
+                        }
+                    }
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-8">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="header-title">
+                        @Localizer["Job Positions"]
+                    </h4>
+                    <div class="table-responsive">
+                        <table id="basic-datatable" class="table dt-responsive nowrap w-100">
+                            <thead>
+                                <tr>
+                                    <th>Đơn vị</th>
+                                    <th>Số lượng</th>
+                                    <th>Đã bổ nhiệm</th>
+                                    <th>Còn lại</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                               <tr>
+                                   <td>Phòng kỹ thuật</td>
+                                   <td>4</td>
+                                   <td>2</td>
+                                   <td>2</td>
+                               </tr>
+                                <tr>
+                                    <td>Phòng phần mềm</td>
+                                    <td>4</td>
+                                    <td>2</td>
+                                    <td>2</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+                    </div> <!-- end table responsive-->
+                </div> <!-- end col-->
+            </div>
+        </div>
+    </div>
+</form>

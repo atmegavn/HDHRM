@@ -14,7 +14,7 @@ namespace HD.Profiles.Jobs
         Task<PagedResultDto<JobDto>> GetListAsync(PagedAndSortedResultRequestDto input);
         Task<PagedResultDto<JobFamilyDto>> GetListJobFamiliesAsync(PagedAndSortedResultRequestDto input);
         Task<JobDto> CreateAsync(CreateJobDto form);
-
+        Task<JobDto> UpdateAsync(Guid id, JobDto input);
         Task<ListResultDto<JobFamiliesLookupDto>> GetJobFamiliesLookupAsync();
     }
 }

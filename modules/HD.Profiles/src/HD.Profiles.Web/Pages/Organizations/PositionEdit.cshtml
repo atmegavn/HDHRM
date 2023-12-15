@@ -1,0 +1,55 @@
+﻿@page
+@using HD.Profiles.Localization
+@using Microsoft.Extensions.Localization
+
+@model HD.Profiles.Web.Pages.Organizations.PositionEditModel
+
+@inject IStringLocalizer<ProfilesResource> Localizer
+@{
+    var currentUrl = $"{Request.PathBase}{Request.Path}{Request.QueryString}";
+}
+<form class="needs-validation" asp-action="@ViewContext.RouteData.Values["action"]" method="post" role="form" novalidate>
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Model.Form.Job.Name</a></li>
+                        <li class="breadcrumb-item active">Model.Form.Name</li>
+                    </ol>
+                </div>
+                <h4 class="page-title">Vị trí Model.Form.Name</h4>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <button class="btn btn-sm btn-secondary"><i class="mdi mdi-content-save"></i> @Localizer["Save"]</button>
+            <a href="@Html.Raw(Model.BackUrl)" class="btn btn-sm btn-primary">
+                <span class="mdi mdi-keyboard-return"></span> @Localizer["Back"]
+            </a>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <div class="mb-3">
+                    <label asp-for="Form.Name" class="form-label">@Localizer["Name"]</label>
+                    <input type="text" asp-for="Form.Name" class="form-control" required>
+                    <span asp-validation-for="Form.Name"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">@Localizer["Description"]</label>
+                    <textarea class="form-control"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">@Localizer["Requirement"]</label>
+                    <textarea class="form-control"></textarea>
+                </div>
+                <input type="text" asp-for="Form.Id" class="gu-hide">
+            </div>
+        </div>
+        <div class="col-6"></div>
+    </div>
+</form>

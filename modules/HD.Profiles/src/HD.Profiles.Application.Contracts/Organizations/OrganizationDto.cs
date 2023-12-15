@@ -19,5 +19,6 @@ namespace HD.Profiles.Organizations
         public Level Level { get; set; }
 
         public List<JobPositionDto> Positions { get; set; }
+        public List<OrganizationDto> Childrent { get; set; }
     }
 }

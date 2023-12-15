@@ -3,6 +3,7 @@ using HD.Profiles.Profiles;
 using HD.Profiles.Profiles.Banks;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Entities.Auditing;
@@ -26,5 +27,6 @@ namespace HD.Profiles.Organizations
         public virtual ICollection<Contact> Contacts { get; set; }
         public virtual ICollection<Address> Address { get; set; }
         public virtual ICollection<Account> BankAccounts { get; set; }
+        public virtual ICollection<Organization> Childrent { get; set; }
     }
 }

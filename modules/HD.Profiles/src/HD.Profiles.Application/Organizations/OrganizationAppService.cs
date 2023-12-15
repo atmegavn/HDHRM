@@ -53,16 +53,16 @@ namespace HD.Profiles.Organizations
         public async Task<OrganizationDto> GetAsync(Guid id)
         {
             var queryable = await _organizationRepository
-                .WithDetailsAsync(o => o.Positions.Where(p => p.Job.JobFamily.Name == "Management"));
+                .WithDetailsAsync(o => o.Positions.Where(p => p.Job.JobFamily.Name == "Management" || p.Job.JobFamily.Name == "Charman"));
             queryable = queryable.Where(o => o.Id == id);
             var data = await AsyncExecuter.FirstOrDefaultAsync(queryable);
             var result = ObjectMapper.Map<Organization, OrganizationDto>(data);
             return result;
         }
 
-        public async Task<List<OrganizationDto>> GetListSubOrganizationAsync(Guid id)
+        public async Task<List<OrganizationDto>> GetListSubOrganizationAsync(Guid? id)
         {
-            var queryable = await _organizationRepository.WithDetailsAsync(o => o.Positions);
+            var queryable = await _organizationRepository.WithDetailsAsync(o => o.Childrent);
             queryable = queryable.Where(o => o.ParentId == id).OrderByDescending(o => o.Name);
             var data = await AsyncExecuter.ToListAsync(queryable);
 
@@ -75,6 +75,7 @@ namespace HD.Profiles.Organizations
             var queryable = await _organizationRepository.WithDetailsAsync(o => o.Positions);
             var paged = queryable.Where(o => !o.ParentId.HasValue).Skip(input.SkipCount).Take(input.MaxResultCount).OrderByDescending(e => e.Name);
             var data = await AsyncExecuter.ToListAsync(paged);
+            //var data = await paged.ToListAsync();
 
             var count = await _organizationRepository.CountAsync(p => p.ParentId == null) ;
             return new PagedResultDto<OrganizationDto>(count, ObjectMapper.Map<List<Organization>, List<OrganizationDto>>(data));
@@ -140,7 +141,8 @@ namespace HD.Profiles.Organizations
             {
                 queryable = queryable.Where(op => op.JobId == jobPositionId);
             }
-            queryable = queryable.Where(op => op.Job.JobFamily.Name != "Management").Where(op => op.OrganizationId == id).OrderBy(op => op.Name);
+            //queryable = queryable.Where(op => op.Job.JobFamily.Name != "Management" && op.Job.JobFamily.Name != "Charman").Where(op => op.OrganizationId == id).OrderBy(op => op.Name);
+            queryable = queryable.Where(op => op.OrganizationId == id).OrderBy(op => op.Name);
             //queryable = queryable.Where(op => op.OrganizationId == id).OrderBy(op => op.Name);
             var data = await AsyncExecuter.ToListAsync(queryable);
 
@@ -156,6 +158,14 @@ namespace HD.Profiles.Organizations
             queryable = queryable.Where(o => o.Id == id);
             var data = await AsyncExecuter.FirstOrDefaultAsync(queryable);
             var result = ObjectMapper.Map<JobPosition, JobPositionDto>(data);
+            return result;
+        }
+
+        public async Task<OrganizationDto> GetOrgWithFullChildrents(Guid id) { 
+            var queryable = await _organizationRepository.WithDetailsAsync(o => o.Childrent);
+            queryable = queryable.Where(o => o.Id == id);
+            var data = await AsyncExecuter.FirstOrDefaultAsync(queryable);
+            var result = ObjectMapper.Map<Organization, OrganizationDto>(data);
             return result;
         }
     }

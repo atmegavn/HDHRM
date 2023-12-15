@@ -11,6 +11,7 @@ namespace HD.Profiles.Organizations
         public Guid Id { get; set; }
         public string Name { get; set; }
         public Guid? EmployeeId { get; set; }
+        public Guid? DecisionId { get; set; }
         public Guid JobId { get; set; }
         public Guid OrganizationId { get; set; }
         public OrganizationDto Organization { get; set; }

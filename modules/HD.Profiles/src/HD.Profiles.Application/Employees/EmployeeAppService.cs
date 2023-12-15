@@ -34,7 +34,6 @@ namespace HD.Profiles.Employees
             employee.JobTitleId = input.JobTitleId;
             employee.Email = input.Email;
             employee.Mobile = input.Mobile;
-
             await _employeeRepository.InsertAsync(employee);
          
            return ObjectMapper.Map<Employee, EmployeeDto>(employee);

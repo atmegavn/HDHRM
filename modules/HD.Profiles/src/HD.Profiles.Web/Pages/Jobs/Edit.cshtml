@@ -1,26 +1,25 @@
 ﻿@page
 @using HD.Profiles.Localization
+@using HD.Profiles.Jobs
 @using Microsoft.Extensions.Localization
-@using HD.Profiles.Organizations
-
 @inject IStringLocalizer<ProfilesResource> Localizer
 
-@model HD.Profiles.Web.Pages.Organizations.EditModel
+@model HD.Profiles.Web.Pages.Jobs.EditModel
 @{
-    ViewBag.Title = @Localizer["Edit Organization"].ToString();
+    ViewBag.Title = @Localizer["Create Position"].ToString();
 }
 
-<form class="needs-validation" asp-action="@ViewContext.RouteData.Values["action"]" method="post" role="form" novalidate>
+<form id="create-story-form" class="needs-validation" asp-action="@ViewContext.RouteData.Values["action"]" method="post" role="form" novalidate>
     <div class="row">
         <div class="col-12">
             <div class="page-title-box">
                 <div class="page-title-right">
                     <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a href="@Url.Page("Index")">@Localizer["Organization"] </a></li>
-                        <li class="breadcrumb-item active">@Localizer["Edit"]</li>
+                        <li class="breadcrumb-item"><a href="@Url.Page("Index")">@Localizer["Job Positions"] </a></li>
+                        <li class="breadcrumb-item active">@Model.Form.Name</li>
                     </ol>
                 </div>
-                <h4 class="page-title">@Localizer["Edit"] @Model.Form.Name</h4>
+                <h4 class="page-title">@Localizer["Edit"]</h4>
             </div>
         </div>
     </div>
@@ -50,22 +49,13 @@
         }
     }
     <div class="row">
-        <div class="col-6">
+        <div class="col-12">
             <div class="form-group">
-                <div class="mb-3">
-                    <label asp-for="Form.Code" class="form-label">@Localizer["Code"]</label>
-                    <input type="text" asp-for="Form.Code" class="form-control" required>
-                    <span asp-validation-for="Form.Code"></span>
-                </div>
+                
                 <div class="mb-3">
                     <label asp-for="Form.Name" class="form-label">@Localizer["Name"]</label>
                     <input type="text" asp-for="Form.Name" class="form-control" required>
                     <span asp-validation-for="Form.Name"></span>
-                </div>
-                <div class="mb-3">
-                    <label asp-for="Form.CreatedDate" class="form-label">@Localizer["Created Date"]</label>
-                    <input type="date" asp-for="Form.CreatedDate" class="form-control">
-                    <span asp-validation-for="Form.CreatedDate"></span>
                 </div>
                 <div class="mb-3">
                     <label asp-for="Form.Description" class="form-label">@Localizer["Description"]</label>
@@ -73,23 +63,22 @@
                     <span asp-validation-for="Form.Description"></span>
                 </div>
                 <div class="mb-3">
-                    <label asp-for="Form.Location" class="form-label">@Localizer["Location"]</label>
-                    <input type="text" asp-for="Form.Location" class="form-control">
-                    <span asp-validation-for="Form.Location"></span>
+                    <label asp-for="Form.Requirement" class="form-label">@Localizer["Requirement"]</label>
+                    <textarea asp-for="Form.Requirement" class="form-control"></textarea>
+                    <span asp-validation-for="Form.Requirement"></span>
                 </div>
                 <div class="mb-3">
-                    <label asp-for="Form.Phone" class="form-label">@Localizer["Phone"]</label>
-                    <input type="text" asp-for="Form.Phone" class="form-control">
-                    <span asp-validation-for="Form.Phone"></span>
+                    <label asp-for="Form.JobFamilyId" class="form-label">@Localizer["Function"]</label>
+                    <select asp-for="Form.JobFamilyId" asp-items="Model.JobFamiliesLookup" class="form-control"></select>
+                    <span asp-validation-for="Form.JobFamilyId"></span>
                 </div>
                 <div class="mb-3">
-                    <label asp-for="Form.Email" class="form-label">@Localizer["Email"]</label>
-                    <input type="text" asp-for="Form.Email" class="form-control">
-                    <span asp-validation-for="Form.Email"></span>
+                    <label asp-for="Form.Level" class="form-label">@Localizer["Level"]</label>
+                    <select asp-for="Form.Level" asp-items="Html.GetEnumSelectList<JobLevel>()" class="form-control"></select>
+                    <span asp-validation-for="Form.Level"></span>
                 </div>
                 <input type="text" asp-for="Form.Id" class="gu-hide">
             </div>
         </div>
-        <div class="col-6"></div>
     </div>
 </form>

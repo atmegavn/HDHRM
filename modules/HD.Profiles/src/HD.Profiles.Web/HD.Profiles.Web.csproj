@@ -39,11 +39,13 @@
   <ItemGroup>
     <Compile Remove="Pages\Employees\Detail.cshtml.cs" />
     <Compile Remove="Pages\Employees\Index.cshtml.cs" />
+    <Compile Remove="Pages\Profiles\Index.cshtml.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Remove="Pages\Employees\Detail.cshtml" />
     <Content Remove="Pages\Employees\Index.cshtml" />
+    <Content Remove="Pages\Profiles\Index.cshtml" />
     <Content Remove="wwwroot\assets\css\app_saas.css" />
     <Content Remove="wwwroot\assets\css\app_saas.min.css" />
     <Content Remove="wwwroot\assets\css\app_saas.min.css.map" />
@@ -58,6 +60,10 @@
   <ItemGroup>
     <None Include="Pages\JobTitles\Create.cshtml" />
     <None Include="Pages\JobTitles\Index.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Pages\Profiles\" />
   </ItemGroup>
 
 </Project>
