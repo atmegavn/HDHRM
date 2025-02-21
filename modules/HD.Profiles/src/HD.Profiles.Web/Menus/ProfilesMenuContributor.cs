@@ -26,9 +26,9 @@ public class ProfilesMenuContributor : IMenuContributor
         //     .AddItem(new ApplicationMenuItem(ProfilesMenus.Prefix, "Vị trí việc làm", url: "/Jobs", icon: "mdi mdi-account-tie"))
         //);
 
-        context.Menu.AddItem(new ApplicationMenuItem(ProfilesMenus.Prefix, displayName: "Hồ sơ nhân viên", icon: "mdi mdi-home", order: 2)
+        context.Menu.AddItem(new ApplicationMenuItem(ProfilesMenus.Prefix, displayName: "Employees Profile", icon: "mdi mdi-home", order: 2)
            .AddItem(new ApplicationMenuItem(ProfilesMenus.Prefix, localizer["Employees"], url: "/Employees", icon: "mdi mdi-account"))
-           .AddItem(new ApplicationMenuItem(ProfilesMenus.Prefix, localizer["Profiles"], url: "/Profiles", icon: "mdi mdi-file-account"))
+           //.AddItem(new ApplicationMenuItem(ProfilesMenus.Prefix, localizer["Profiles"], url: "/Profiles", icon: "mdi mdi-file-account"))
         );
 
         //context.Menu.AddItem(new ApplicationMenuItem(ProfilesMenus.Prefix, "Danh mục", icon: "mdi mdi-home")

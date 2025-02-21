@@ -22,5 +22,7 @@
             }
         },
         plugins: ["types"]
+    }).bind("loaded.jstree", function (event, data) {
+        $(this).jstree("open_all");
     });
 });

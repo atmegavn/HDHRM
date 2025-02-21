@@ -24,14 +24,14 @@
                             <span class="mdi mdi-magnify search-icon"></span>
                             <input type="month" class="form-control" />
                             <button class="input-group-text btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Tất cả
+                                All Status
                             </button>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" href="#">Chưa bổ nhiệm</a>
-                                <a class="dropdown-item" href="#">Đã bổ nhiệm</a>
-                                <a class="dropdown-item" href="#">Đang tuyển</a>
-                                <a class="dropdown-item" href="#">Sắp hết hạn hợp đồng</a>
-                                <a class="dropdown-item" href="#">Sắp nghỉ việc</a>
+                                <a class="dropdown-item" href="#">Not Appointed</a>
+                                <a class="dropdown-item" href="#">Appointed</a>
+                                <a class="dropdown-item" href="#">Recruiting</a>
+                                <a class="dropdown-item" href="#">Contract Expiring Soon</a>
+                                <a class="dropdown-item" href="#">Resigning Soon</a>
                             </div>
                         </div>
                     </form>
@@ -57,15 +57,15 @@
                 <i class="mdi mdi-sort"></i>
             </button>
             <div class="dropdown-menu" aria-labelledby="employee_sorter">
-                <a class="dropdown-item" href="#">Sắp xếp theo Tên</a>
-                <a class="dropdown-item" href="#">Sắp xếp theo Cấp bậc</a>
-                <a class="dropdown-item" href="#">Sắp xếp theo Trạng thái bổ nhiệm</a>
+                <a class="dropdown-item" href="#">Sort by Name</a>
+                <a class="dropdown-item" href="#">Sort by Level</a>
+                <a class="dropdown-item" href="#">Sort by Appointment Status</a>
             </div>
         </div>
         <div class="btn-group ms-1">
             <a class="btn btn-light " href="#" tabindex="-1" aria-disabled="true"><i class="mdi mdi-arrow-left-bold"></i></a>
             <a class="btn btn-light">
-                1 - @total của @total bản ghi
+                1 - @total of @total records
             </a>
             <a class="btn btn-light" href="#"><i class="mdi mdi-arrow-right-bold"></i></a>
         </div>
@@ -88,12 +88,22 @@
                             <i class="mdi mdi-dots-vertical"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end" style="">
-                            <a href="@Url.Page("PositionDetail", new {id=position.Id, backUrl = currentUrl })" class="dropdown-item"><i class="mdi mdi-eye me-1"></i> Xem chi tiết</a>
-                            <a href="javascript:void(0);" class="dropdown-item"><i class="mdi mdi-plus-circle me-1"></i> Yêu cầu tuyển dụng</a>
-                            <a href="javascript:void(0);" onclick="openlangerModal(this)" url="@Url.Page("Appoint", new { backUrl=currentUrl, id=position.Id })" class="dropdown-item"><i class="mdi mdi-account-multiple-check me-1"></i> Bổ nhiệm </a>
-                            <a href="javascript:void(0);" class="dropdown-item"><i class="mdi mdi-square-edit-outline me-1"></i> Sửa</a>
+                            <a href="@Url.Page("PositionDetail", new {id=position.Id, backUrl = currentUrl })" class="dropdown-item">
+                                <i class="mdi mdi-eye me-1"></i> View Details
+                            </a>
+                            <a href="javascript:void(0);" class="dropdown-item">
+                                <i class="mdi mdi-plus-circle me-1"></i> Recruitment Request
+                            </a>
+                            <a href="javascript:void(0);" onclick="openlangerModal(this)" url="@Url.Page("Appoint", new { backUrl=currentUrl, id=position.Id })" class="dropdown-item">
+                                <i class="mdi mdi-account-multiple-check me-1"></i> Appoint
+                            </a>
+                            <a href="javascript:void(0);" class="dropdown-item">
+                                <i class="mdi mdi-square-edit-outline me-1"></i> Edit
+                            </a>
                             <hr class="dropdown-divider">
-                            <a href="javascript:void(0);" class="dropdown-item text-danger"><i class="mdi mdi-trash-can-outline me-1"></i> Xóa</a>
+                            <a href="javascript:void(0);" class="dropdown-item text-danger">
+                                <i class="mdi mdi-trash-can-outline me-1"></i> Delete
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -104,11 +114,11 @@
                             if (position.EmployeeId.HasValue)
                             {
                                 <div class="flex-shrink-0">
-                                    <h5 class="font-13 text-success my-0"><i class="mdi mdi-check"></i> Đã bổ nhiệm</h5>
+                                    <h5 class="font-13 text-success my-0"><i class="mdi mdi-check"></i> Appointed</h5>
                                 </div>
                                 <div class="flex-grow-1 ms-2"> </div>
                                 <div class="text-end multi-user">
-                                    <a href="javascript:void(0);" class="d-inline-block" data-bs-toggle="tooltip" data-bs-placement="top" title="Tên nhân viên">
+                                    <a href="javascript:void(0);" class="d-inline-block" data-bs-toggle="tooltip" data-bs-placement="top" title="Employee Name">
                                         <img src="/assets/images/users/avatar-1.jpg" class="rounded-circle avatar-xs" alt="friend">
                                     </a>
                                 </div>
@@ -116,7 +126,7 @@
                             else
                             {
                                 <div class="flex-shrink-0">
-                                    <h5 class="font-13 text-muted my-0"><i class="mdi mdi-clock-outline"></i> Chưa bồ nhiệm</h5>
+                                    <h5 class="font-13 text-muted my-0"><i class="mdi mdi-clock-outline"></i> Not Appointed</h5>
                                 </div>
                                 <div class="flex-grow-1 ms-2"> </div>
                                 <div class="text-end multi-user">

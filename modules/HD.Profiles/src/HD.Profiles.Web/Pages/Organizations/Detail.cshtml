@@ -135,17 +135,17 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="header-title">
-                    Định biên
+                    Workforce planning
                 </h4>
                 <div class="table-responsive">
                     <table id="basic-datatable" class="table dt-responsive nowrap w-100">
                         <thead>
                             <tr>
-                                <th>Vị trí</th>
-                                <th>Cấp bậc</th>
-                                <th>Số lượng</th>
-                                <th>Đã bổ nhiệm</th>
-                                <th>Còn lại</th>
+                                <th>Position</th>
+                                <th>Level</th>
+                                <th>Quantity</th>
+                                <th>Appointed</th>
+                                <th>Remaining</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -164,7 +164,7 @@
                             @{ 
                                 if(positions.Keys.Count == 0)
                                 {
-                                    <tr><td colspan="5" class="justify-content-center align-content-center"><i class="text-info">Chưa có vị trí nào</i></td></tr>
+                                    <tr><td colspan="5" class="justify-content-center align-content-center"><i class="text-info">No data here</i></td></tr>
                                 }
                             }
                         </tbody>

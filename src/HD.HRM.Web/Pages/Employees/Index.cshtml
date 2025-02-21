@@ -49,22 +49,6 @@
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Search..." />
                             <span class="mdi mdi-magnify search-icon"></span>
-                            <button class="input-group-text btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Trạng thái
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" href="#">Chính thức</a>
-                                <a class="dropdown-item" href="#">Thử việc</a>
-                                <a class="dropdown-item" href="#">Nghỉ không lương</a>
-                            </div>
-                            <button class="input-group-text btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Đơn vị
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" href="#">Ban khoa giáo</a>
-                                <a class="dropdown-item" href="#">Ban thời sự</a>
-                                <a class="dropdown-item" href="#">Ban quốc tế</a>
-                            </div>
                         </div>
                     </form>
                 </div>
@@ -85,9 +69,8 @@
                 <i class="mdi mdi-sort"></i>
             </button>
             <div class="dropdown-menu" aria-labelledby="employee_sorter">
-                <a class="dropdown-item" href="#">Sắp xếp theo Tên</a>
-                <a class="dropdown-item" href="#">Sắp xếp theo Chức danh</a>
-                <a class="dropdown-item" href="#">Sắp xếp theo Đơn vị</a>
+                <a class="dropdown-item" href="#">Order by Name</a>
+                <a class="dropdown-item" href="#">Order by Job Title</a>
             </div>
         </div>
         <div class="btn-group ms-1">
@@ -95,9 +78,9 @@
                 <i class="mdi mdi-file-export"></i>
             </button>
             <div class="dropdown-menu" aria-labelledby="employee_exporter">
-                <a class="dropdown-item" href="#">Nhân viên sinh nhật trong tháng</a>
-                <a class="dropdown-item" href="#">Nhân viên sắp hết hạn hợp đồng</a>
-                <a class="dropdown-item" href="#">Nhân viên có con nhỏ</a>
+                <a class="dropdown-item" href="#">Employees with birthdays this month</a>
+                <a class="dropdown-item" href="#">Employees with contracts expiring soon</a>
+                <a class="dropdown-item" href="#">Employees with young children</a>
             </div>
         </div>
         <div class="btn-group ms-1">
@@ -157,7 +140,7 @@
                 <div class="col-4">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="header-title mb-3">Cây tổ chức</h4>
+                            <h4 class="header-title mb-3">Organizational Tree</h4>
                             <input class="form-control">
                             <div id="jstree-1" class="mt-1">
                                 <ul>
@@ -190,7 +173,7 @@
                 <div class="col-8">
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <h4 class="header-title">Danh sách nhân viên</h4>
+                            <h4 class="header-title">Employees List</h4>
                             <div class="d-flex align-items-center">
                                 <input class="form-control mr-2" style="width: 200px;" placeholder="Search">
                                 <div class="dropdown">
@@ -217,7 +200,7 @@
                                 <table class="table table-centered table-hover table-nowrap mb-0">
                                     <thead>
                                         <tr>
-                                            <th>Họ tên</th>
+                                            <th>Name</th>
                                             <th>Email</th>
                                             <th>Project Name</th>
                                             <th>Status</th>
@@ -231,10 +214,10 @@
                                                 <td>
                                                     <div class="d-flex align-items-center">
                                                         <div class="flex-shrink-0">
-                                                            <img class="rounded-circle" src="assets/images/users/avatar-1.jpg" alt="Avtar image" width="31">
+                                                            <img class="rounded-circle" src="~/assets/images/users/avatar-1.jpg" alt="Avtar image" width="31">
                                                         </div>
                                                         <div class="flex-grow-1 ms-2">
-                                                            @emp.Name
+                                                            <a href="@Url.Page("Detail",new {id=emp.Id })" class="text-secondary"><h5 class="my-1">@emp.Name</h5></a>
                                                         </div>
                                                     </div>
                                                 </td>

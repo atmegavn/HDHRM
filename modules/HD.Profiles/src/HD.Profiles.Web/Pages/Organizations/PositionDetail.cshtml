@@ -24,10 +24,12 @@
 
 <div class="row">
     <div class="col-12">
-        <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="mdi mdi-account-plus"></i> Bổ nhiệm </button>
+        <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="mdi mdi-account-plus"></i> Appoint
+        </button>
         <div class="dropdown-menu">
-            <a class="dropdown-item" href="#"><i class="mdi mdi-account-remove"></i> Miễn nhiệm</a>
-            <a class="dropdown-item" href="#"><i class="mdi mdi-account-search"></i> Yêu cầu tuyển dụng</a>
+            <a class="dropdown-item" href="#"><i class="mdi mdi-account-remove"></i> Dismiss</a>
+            <a class="dropdown-item" href="#"><i class="mdi mdi-account-search"></i> Recruitment Request</a>
         </div>
         <a class="btn btn-sm btn-secondary" href="@Url.Page("PositionEdit", new { backUrl = currentUrl, id=Model.Form.Id })"><i class="mdi mdi-account-edit"></i> @Localizer["Edit"]</a>
 
@@ -42,22 +44,24 @@
     <div class="col-4">
         <div class="card">
             <div class="card-body">
-                <h4 class="header-title mt-0 mb-3">Mô tả công việc</h4>
+                <h4 class="header-title mt-0 mb-3">Job Description</h4>
                 @{
-                    if (!string.IsNullOrEmpty(Model.Form.Job.Description))
+                    @if (!string.IsNullOrEmpty(Model.Form.Job.Description))
                     {
                         <p class="text-muted font-13">
                             @Model.Form.Job.Description
                         </p>
                         <hr>
-                    }else{
+                    }
+                    else
+                    {
                         <p class="text-muted font-13">
-                            Mô tả công việc cho vị trí này
+                            Job description for this position
                         </p>
                         <hr>
                     }
                 }
-                <h4 class="header-title mt-0 mb-3">Yêu cầu công việc</h4>
+                <h4 class="header-title mt-0 mb-3">Job Requirements</h4>
                 @{
                     if (!string.IsNullOrEmpty(Model.Form.Job.Description))
                     {
@@ -65,39 +69,43 @@
                             @Model.Form.Job.Requirement
                         </p>
                         <hr>
-                    }else{
-                         <p class="text-muted font-13">
-                            Yêu cầu công việc cho vị trí này
+                    }
+                    else
+                    {
+                        <p class="text-muted font-13">
+                            Job requirements for this position
                         </p>
                         <hr>
                     }
                 }
-                 <div class="text-start">
-                    <p class="text-muted"><strong>Đơn vị: </strong> <i class="float-end">@Model.Form.Organization.Name </i></p>
+                <div class="text-start">
+                    <p class="text-muted"><strong>Unit: </strong> <i class="float-end">@Model.Form.Organization.Name </i></p>
                     <p class="text-muted">
-                        <strong>Trạng thái: </strong> <span class="badge bg-danger float-end">Đã nghỉ việc</span>
-                        <span class="badge bg-warning me-2 float-end">Đang tuyển</span> <span data-bs-toggle="tooltip" data-bs-title="Hiệu lực từ 01/01/2023-31/12/2023" class="badge bg-success me-2 float-end" title="">Đã bổ nhiệm</span>
+                        <strong>Status: </strong>
+                        <span class="badge bg-danger float-end">Resigned</span>
+                        <span class="badge bg-warning me-2 float-end">Recruiting</span>
+                        <span data-bs-toggle="tooltip" data-bs-title="Effective from 01/01/2023-31/12/2023" class="badge bg-success me-2 float-end" title="">Appointed</span>
                     </p>
-                    
+
                     @{
                         if (Model.Form.EmployeeId.HasValue)
                         {
-                            <p class="text-muted"><strong>Phụ trách: </strong> <a target="_blank" href="/Employees/Detail?id=@Model.Form.EmployeeId" class="ms-2 float-end">Lê Văn thành </a></p>
+                            <p class="text-muted"><strong>In Charge: </strong> <a target="_blank" href="/Employees/Detail?id=@Model.Form.EmployeeId" class="ms-2 float-end">Lê Văn Thành </a></p>
                         }
                         else
                         {
-                            <p class="text-muted"><strong>Phụ trách: </strong> <a href="javascript:void(0);" onclick="openlangerModal(this)" url="@Url.Page("Appoint", new { backUrl=currentUrl, id=Model.Form.Id })" class="float-end"><i class="mdi mdi-open-in-new"></i></a> <i class="me-2 float-end">@Localizer["not assigned"] </i></p>
+                            <p class="text-muted"><strong>In Charge: </strong> <a href="javascript:void(0);" onclick="openlangerModal(this)" url="@Url.Page("Appoint", new { backUrl=currentUrl, id=Model.Form.Id })" class="float-end"><i class="mdi mdi-open-in-new"></i></a> <i class="me-2 float-end">@Localizer["not assigned"] </i></p>
                         }
                     }
 
                     @{
                         if (Model.Form.DecisionId.HasValue)
                         {
-                            <p class="text-muted"><strong>Quyết định: </strong> <a target="_blank" href="/Decision/Detail?id=@Model.Form.DecisionId" class="ms-2 float-end">Số QD123456 </a></p>
+                            <p class="text-muted"><strong>Decision: </strong> <a target="_blank" href="/Decision/Detail?id=@Model.Form.DecisionId" class="ms-2 float-end">Decision No. QD123456 </a></p>
                         }
                         else
                         {
-                            <p class="text-muted"><strong>Quyết định: </strong>  <i class="me-2 float-end">Chưa có  </i></p>
+                            <p class="text-muted"><strong>Decision: </strong>  <i class="me-2 float-end">Not available</i></p>
                         }
                     }
                 </div>
@@ -108,21 +116,21 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="header-title">
-                    Salary - Mức lương chi trả cho vị trí này
+                    Salary - Compensation for this position
                 </h4>
             </div>
         </div>
         <div class="card">
             <div class="card-body">
                 <h4 class="header-title">
-                    Candidates - Các ứng viên cho vị trí này
+                    Candidates - Applicants for this position
                 </h4>
             </div>
         </div>
         <div class="card">
             <div class="card-body">
                 <h4 class="header-title">
-                    Decisions - Các quyết định liên quan đến vị trí này
+                    Decisions - Related decisions for this position
                 </h4>
             </div>
         </div>
